@@ -1,0 +1,197 @@
+/* ============================================
+   FOTO WORLD — Portfolio Page Styles
+   ============================================ */
+
+.portfolio-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-bottom: var(--space-10);
+}
+
+.filter-btn {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-gold);
+  color: white;
+  border-color: var(--primary-gold);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+}
+
+/* ── MASONRY GRID ── */
+.masonry-grid {
+  column-count: 3;
+  column-gap: var(--space-4);
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: var(--space-4);
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+
+.masonry-item:hover img {
+  transform: scale(1.04);
+}
+
+.masonry-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-5);
+}
+
+.masonry-item:hover .masonry-overlay {
+  opacity: 1;
+}
+
+.masonry-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.masonry-cat {
+  font-size: var(--text-xs);
+  color: var(--primary-gold-light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: var(--weight-semibold);
+}
+
+.masonry-title {
+  font-size: var(--text-sm);
+  color: white;
+  font-weight: var(--weight-medium);
+}
+
+.masonry-zoom-icon {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all var(--transition-base);
+}
+
+.masonry-item:hover .masonry-zoom-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── LIGHTBOX ── */
+.lightbox-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.97);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-base);
+}
+
+.lightbox-container.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-main {
+  position: relative;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#lightbox-img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 80px rgba(0,0,0,0.5);
+  transform: scale(0.9);
+  transition: transform var(--transition-spring);
+  user-select: none;
+}
+
+.lightbox-container.open #lightbox-img {
+  transform: scale(1);
+}
+
+.lightbox-caption {
+  margin-top: var(--space-4);
+  text-align: center;
+  color: rgba(255,255,255,0.7);
+  font-size: var(--text-sm);
+}
+
+.lightbox-count {
+  color: rgba(255,255,255,0.4);
+  font-size: var(--text-xs);
+  margin-top: var(--space-2);
+}
+
+/* ── HIDDEN FILTER ── */
+.masonry-item.hidden {
+  display: none;
+}
+
+.masonry-item.filtering {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.masonry-item.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 1024px) {
+  .masonry-grid { column-count: 2; }
+}
+
+@media (max-width: 640px) {
+  .masonry-grid { column-count: 1; }
+}

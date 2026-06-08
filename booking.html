@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Session | FOTO WORLD Digital Colour Lab & Studio</title>
+  <meta name="description" content="Book your photography session online at FOTO WORLD. Choose your service, pick a date and time, and confirm your booking in minutes." />
+  <link rel="canonical" href="https://fotoworldstudio.com/booking.html" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/pages/booking.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <a class="skip-nav" href="#main-content">Skip to main content</a>
+  <div id="preloader"><div class="preloader-logo">FW</div><div class="preloader-ring"></div></div>
+
+  <header id="navbar">
+    <nav class="container nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-mark">FW</div><div class="nav-logo-text"><span class="nav-logo-title">Foto World</span><span class="nav-logo-sub">Digital Colour Lab</span></div></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li><li><a href="team.html">Team</a></li><li><a href="lab.html">Lab</a></li>
+        <li><a href="reviews.html">Reviews</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta-wrap">
+        <button id="theme-toggle" aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></button>
+        <button id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+      </div>
+    </nav>
+  </header>
+  <div id="mobile-menu"><nav class="mobile-nav-links"><a href="index.html">🏠 Home</a><a href="about.html">📖 About</a><a href="services.html">✨ Services</a><a href="portfolio.html">🖼 Portfolio</a><a href="team.html">👥 Team</a><a href="lab.html">🔬 Lab</a><a href="reviews.html">⭐ Reviews</a><a href="blog.html">📝 Blog</a><a href="contact.html">📞 Contact</a></nav><div class="mobile-menu-footer"><a href="booking.html" class="btn btn-primary" style="flex:1;justify-content:center">Book Now</a></div></div>
+
+  <main id="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#0A0A0A,#1A1208);min-height:38vh">
+      <div class="page-hero-content">
+        <p class="section-label" style="justify-content:center;color:rgba(201,168,76,0.8);margin-bottom:var(--space-4)">Reserve Your Date</p>
+        <h1 style="color:white">Book Your <span class="text-gradient-gold">Session</span></h1>
+        <p style="color:rgba(255,255,255,0.6);margin:0 auto;max-width:55ch">Complete the form below to book your photography session. We'll confirm within 24 hours.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:var(--space-10);align-items:start" class="booking-layout">
+
+          <!-- BOOKING FORM AREA -->
+          <div>
+            <!-- Progress Steps -->
+            <div class="booking-progress" id="booking-progress">
+              <div class="booking-step active" data-step="1"><div class="step-circle">1</div><span class="step-label">Service</span></div>
+              <div class="step-connector"></div>
+              <div class="booking-step" data-step="2"><div class="step-circle">2</div><span class="step-label">Date & Time</span></div>
+              <div class="step-connector"></div>
+              <div class="booking-step" data-step="3"><div class="step-circle">3</div><span class="step-label">Your Details</span></div>
+              <div class="step-connector"></div>
+              <div class="booking-step" data-step="4"><div class="step-circle">4</div><span class="step-label">Confirm</span></div>
+            </div>
+
+            <!-- Step 1: Service Selection -->
+            <div class="booking-panel active" id="panel-step1">
+              <h2 style="font-size:var(--text-2xl);margin-bottom:var(--space-2)">Choose Your Service</h2>
+              <p style="color:var(--text-muted);margin-bottom:var(--space-8)">Select the photography service you'd like to book.</p>
+              <div class="grid-auto-sm" style="margin-bottom:var(--space-8)">
+                <label class="service-select-card" style="cursor:pointer">
+                  <input type="radio" name="service" value="wedding" id="svc-wedding" style="position:absolute;opacity:0" />
+                  <div class="card card-service" style="cursor:pointer;border:2px solid transparent;transition:all 0.3s" onclick="selectServiceCard(this,'Wedding Photography','₹25,000+')">
+                    <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                    <h3 class="service-title" style="font-size:var(--text-base)">Wedding Photography</h3>
+                    <span class="service-price">From ₹25,000</span>
+                  </div>
+                </label>
+                <label class="service-select-card" style="cursor:pointer">
+                  <input type="radio" name="service" value="portrait" id="svc-portrait" style="position:absolute;opacity:0" />
+                  <div class="card card-service" style="cursor:pointer;border:2px solid transparent;transition:all 0.3s" onclick="selectServiceCard(this,'Portrait Session','₹3,500+')">
+                    <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
+                    <h3 class="service-title" style="font-size:var(--text-base)">Portrait Session</h3>
+                    <span class="service-price">From ₹3,500</span>
+                  </div>
+                </label>
+                <label class="service-select-card" style="cursor:pointer">
+                  <input type="radio" name="service" value="cinema" id="svc-cinema" style="position:absolute;opacity:0" />
+                  <div class="card card-service" style="cursor:pointer;border:2px solid transparent;transition:all 0.3s" onclick="selectServiceCard(this,'Cinematography','₹30,000+')">
+                    <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+                    <h3 class="service-title" style="font-size:var(--text-base)">Cinematography</h3>
+                    <span class="service-price">From ₹30,000</span>
+                  </div>
+                </label>
+                <label class="service-select-card" style="cursor:pointer">
+                  <input type="radio" name="service" value="baby" id="svc-baby" style="position:absolute;opacity:0" />
+                  <div class="card card-service" style="cursor:pointer;border:2px solid transparent;transition:all 0.3s" onclick="selectServiceCard(this,'Baby & Maternity','₹5,000+')">
+                    <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                    <h3 class="service-title" style="font-size:var(--text-base)">Baby & Maternity</h3>
+                    <span class="service-price">From ₹5,000</span>
+                  </div>
+                </label>
+                <label class="service-select-card" style="cursor:pointer">
+                  <input type="radio" name="service" value="event" id="svc-event" style="position:absolute;opacity:0" />
+                  <div class="card card-service" style="cursor:pointer;border:2px solid transparent;transition:all 0.3s" onclick="selectServiceCard(this,'Event Photography','₹4,500+')">
+                    <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                    <h3 class="service-title" style="font-size:var(--text-base)">Event Photography</h3>
+                    <span class="service-price">From ₹4,500</span>
+                  </div>
+                </label>
+                <label class="service-select-card" style="cursor:pointer">
+                  <input type="radio" name="service" value="pre-wedding" id="svc-prewedding" style="position:absolute;opacity:0" />
+                  <div class="card card-service" style="cursor:pointer;border:2px solid transparent;transition:all 0.3s" onclick="selectServiceCard(this,'Pre-Wedding Shoot','₹8,000+')">
+                    <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+                    <h3 class="service-title" style="font-size:var(--text-base)">Pre-Wedding Shoot</h3>
+                    <span class="service-price">From ₹8,000</span>
+                  </div>
+                </label>
+              </div>
+              <div style="display:flex;justify-content:flex-end">
+                <button class="btn btn-primary btn-lg" onclick="goToStep(2)" id="btn-step1-next">Next: Choose Date →</button>
+              </div>
+            </div>
+
+            <!-- Step 2: Date & Time -->
+            <div class="booking-panel" id="panel-step2">
+              <h2 style="font-size:var(--text-2xl);margin-bottom:var(--space-2)">Pick a Date & Time</h2>
+              <p style="color:var(--text-muted);margin-bottom:var(--space-6)">Select your preferred session date and time slot.</p>
+
+              <div style="margin-bottom:var(--space-8)">
+                <div class="calendar-widget">
+                  <div class="calendar-nav">
+                    <button class="calendar-nav-btn" id="cal-prev" aria-label="Previous month"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                    <div class="calendar-month-title" id="cal-month-label">June 2026</div>
+                    <button class="calendar-nav-btn" id="cal-next" aria-label="Next month"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                  </div>
+                  <div class="calendar-grid" id="calendar-grid">
+                    <!-- Generated by JS -->
+                  </div>
+                </div>
+              </div>
+
+              <div id="time-slots-section" style="display:none;margin-bottom:var(--space-8)">
+                <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-4)">Available Time Slots — <span id="selected-date-label" style="color:var(--primary-gold)"></span></h3>
+                <div class="time-slots-grid" id="time-slots-grid">
+                  <!-- Generated by JS -->
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between">
+                <button class="btn btn-ghost btn-lg" onclick="goToStep(1)">← Back</button>
+                <button class="btn btn-primary btn-lg" onclick="goToStep(3)" id="btn-step2-next" disabled>Next: Your Details →</button>
+              </div>
+            </div>
+
+            <!-- Step 3: Customer Details -->
+            <div class="booking-panel" id="panel-step3">
+              <h2 style="font-size:var(--text-2xl);margin-bottom:var(--space-2)">Your Details</h2>
+              <p style="color:var(--text-muted);margin-bottom:var(--space-8)">Please provide your contact information so we can confirm your booking.</p>
+
+              <form id="booking-form" novalidate>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4)">
+                  <div class="form-group">
+                    <label class="form-label" for="customer-name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="customer-name" class="form-input" placeholder="Your full name" required autocomplete="name" />
+                    <span class="form-error">Please enter your name</span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="customer-phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="customer-phone" class="form-input" placeholder="+91 XXXXX XXXXX" required autocomplete="tel" />
+                    <span class="form-error">Please enter your phone number</span>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom:var(--space-4)">
+                  <label class="form-label" for="customer-email">Email Address <span class="required">*</span></label>
+                  <input type="email" id="customer-email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
+                  <span class="form-error">Please enter a valid email address</span>
+                </div>
+                <div class="form-group" style="margin-bottom:var(--space-4)">
+                  <label class="form-label" for="occasion">Occasion / Event Name</label>
+                  <input type="text" id="occasion" class="form-input" placeholder="E.g. Priya & Karthik Wedding, Baby Shower" />
+                </div>
+                <div class="form-group" style="margin-bottom:var(--space-8)">
+                  <label class="form-label" for="special-requests">Special Requests or Notes</label>
+                  <textarea id="special-requests" class="form-textarea" placeholder="Any special requirements, locations, props, or other details..."></textarea>
+                </div>
+              </form>
+
+              <div style="display:flex;justify-content:space-between">
+                <button class="btn btn-ghost btn-lg" onclick="goToStep(2)">← Back</button>
+                <button class="btn btn-primary btn-lg" onclick="goToStep(4)" id="btn-step3-next">Review & Confirm →</button>
+              </div>
+            </div>
+
+            <!-- Step 4: Confirmation -->
+            <div class="booking-panel" id="panel-step4">
+              <h2 style="font-size:var(--text-2xl);margin-bottom:var(--space-8)">Confirm Your Booking</h2>
+
+              <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);padding:var(--space-8);margin-bottom:var(--space-8)" id="booking-review-card">
+                <h3 style="font-size:var(--text-lg);color:var(--primary-gold);margin-bottom:var(--space-6);padding-bottom:var(--space-3);border-bottom:1px solid var(--border-subtle)">Booking Summary</h3>
+                <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:var(--text-sm)">Service</span><span id="conf-service" style="font-weight:600">Wedding Photography</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:var(--text-sm)">Date</span><span id="conf-date" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:var(--text-sm)">Time</span><span id="conf-time" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:var(--text-sm)">Name</span><span id="conf-name" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:var(--text-sm)">Phone</span><span id="conf-phone" style="font-weight:600">—</span></div>
+                  <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:var(--text-sm)">Email</span><span id="conf-email" style="font-weight:600">—</span></div>
+                </div>
+                <div style="margin-top:var(--space-6);padding:var(--space-4);background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:var(--radius-lg)">
+                  <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0">📋 By confirming, you agree to be contacted by our team within 24 hours. A 50% advance payment is required to secure your booking date.</p>
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4)">
+                <button class="btn btn-ghost btn-lg" onclick="goToStep(3)">← Edit Details</button>
+                <button class="btn btn-primary btn-xl" id="confirm-booking-btn" onclick="confirmBooking()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  Confirm via WhatsApp
+                </button>
+              </div>
+
+              <!-- Success State -->
+              <div id="booking-success" style="display:none;text-align:center;padding:var(--space-16) 0">
+                <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-6)">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h2 style="color:var(--primary-gold);margin-bottom:var(--space-4)">Booking Requested!</h2>
+                <p style="color:var(--text-secondary);max-width:50ch;margin:0 auto var(--space-8)">Your booking request has been sent via WhatsApp. Our team will confirm within 24 hours. We look forward to working with you!</p>
+                <a href="index.html" class="btn btn-primary btn-lg">Back to Home</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOOKING SIDEBAR -->
+          <aside class="booking-summary-card">
+            <div class="booking-summary-title">Your Selection</div>
+            <div id="summary-content">
+              <div class="summary-item"><span class="summary-label">Service</span><span class="summary-value" id="sum-service">Not selected</span></div>
+              <div class="summary-item"><span class="summary-label">Date</span><span class="summary-value" id="sum-date">Not selected</span></div>
+              <div class="summary-item"><span class="summary-label">Time</span><span class="summary-value" id="sum-time">Not selected</span></div>
+              <div class="summary-item"><span class="summary-label">Starting From</span><span class="summary-value" id="sum-price" style="color:var(--primary-gold-light)">—</span></div>
+            </div>
+
+            <div style="margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid rgba(255,255,255,0.08)">
+              <div style="font-size:var(--text-xs);color:rgba(255,255,255,0.4);margin-bottom:var(--space-4);letter-spacing:0.08em;text-transform:uppercase">Need Help?</div>
+              <a href="tel:+919876543210" class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-bottom:var(--space-3);color:white;border-color:rgba(255,255,255,0.15)">📞 Call Us</a>
+              <a href="https://wa.me/919876543210" target="_blank" class="btn btn-sm" style="width:100%;justify-content:center;background:#25D366;color:white">💬 WhatsApp</a>
+            </div>
+
+            <div style="margin-top:var(--space-6);padding-top:var(--space-6);border-top:1px solid rgba(255,255,255,0.08)">
+              <div style="font-size:var(--text-xs);color:rgba(255,255,255,0.4);margin-bottom:var(--space-3);letter-spacing:0.08em;text-transform:uppercase">Studio Hours</div>
+              <div style="font-size:var(--text-sm);color:rgba(255,255,255,0.6);line-height:1.8">Mon–Sat: 9:00 AM – 8:00 PM<br>Sunday: 10:00 AM – 6:00 PM</div>
+            </div>
+
+            <div style="margin-top:var(--space-6);display:flex;align-items:center;gap:var(--space-2)">
+              <span style="color:#22c55e;font-size:1.2rem">✓</span>
+              <span style="font-size:var(--text-xs);color:rgba(255,255,255,0.5)">Free cancellation up to 48 hrs before session</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a id="whatsapp-fab" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg></a>
+  <button id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/booking.js"></script>
+</body>
+</html>

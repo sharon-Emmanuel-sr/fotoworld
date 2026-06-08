@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The FOTO WORLD Lab | Premium Studio & Printing Facility</title>
+  <meta name="description" content="Explore the FOTO WORLD Digital Colour Lab — 2,000 sq ft studio, Fujifilm DL600 printing lab, Sony cinema cameras, DJI drones and state-of-the-art editing suites in Tamil Nadu." />
+  <link rel="canonical" href="https://fotoworldstudio.com/lab.html" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/pages/booking.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    /* ── LAB PAGE STYLES ── */
+    .lab-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #050505;
+      position: relative;
+      overflow: hidden;
+      margin-top: var(--nav-height);
+      padding: var(--space-20) var(--container-padding);
+    }
+    .lab-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .lab-hero-content { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
+    .lab-stat-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+      margin-top: var(--space-8);
+      padding: var(--space-5) var(--space-8);
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: rgba(255,255,255,0.6);
+    }
+    .lab-stat-strip .strip-sep { color: rgba(201,168,76,0.4); font-size: 1.2rem; }
+    .lab-stat-strip strong { color: var(--primary-gold); font-weight: 700; }
+
+    .equipment-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+    .equip-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      transition: all var(--transition-base);
+      position: relative;
+      overflow: hidden;
+    }
+    .equip-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-gold), var(--primary-gold-light));
+      transform: scaleX(0);
+      transition: transform var(--transition-base);
+    }
+    .equip-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(201,168,76,0.2); }
+    .equip-card:hover::after { transform: scaleX(1); }
+    .equip-icon {
+      width: 64px; height: 64px; border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-4);
+      color: var(--primary-gold);
+      transition: all var(--transition-base);
+    }
+    .equip-card:hover .equip-icon { background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark)); color: white; }
+    .equip-name { font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-primary); margin-bottom: var(--space-1); }
+    .equip-type { font-size: var(--text-xs); color: var(--primary-gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-2); }
+    .equip-desc { font-size: var(--text-xs); color: var(--text-muted); line-height: 1.6; }
+
+    .spaces-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    .space-card {
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      transition: all var(--transition-base);
+    }
+    .space-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+    .space-img { height: 220px; overflow: hidden; position: relative; }
+    .space-img img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+    .space-card:hover .space-img img { transform: scale(1.05); }
+    .space-body { padding: var(--space-6); }
+    .space-tag { font-size: var(--text-xs); color: var(--primary-gold); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-2); }
+    .space-name { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary); margin-bottom: var(--space-3); }
+    .space-desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; }
+
+    .workflow-steps {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .workflow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      flex: 1;
+      min-width: 140px;
+      max-width: 180px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .workflow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: calc(50% + 32px);
+      width: calc(100% - 64px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-gold), rgba(201,168,76,0.3));
+    }
+    .workflow-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-family: var(--font-display);
+      font-size: var(--text-xl); font-weight: var(--weight-black);
+      box-shadow: var(--shadow-gold);
+    }
+    .workflow-label { font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-primary); }
+    .workflow-sub { font-size: var(--text-xs); color: var(--text-muted); line-height: 1.5; }
+
+    .partners-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      padding: var(--space-8) 0;
+    }
+    .partner-chip {
+      padding: var(--space-3) var(--space-6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-bold);
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      background: var(--bg-card);
+      transition: all var(--transition-base);
+    }
+    .partner-chip:hover { border-color: var(--primary-gold); color: var(--primary-gold); transform: translateY(-2px); }
+
+    @media (max-width: 1024px) { .equipment-grid { grid-template-columns: repeat(2, 1fr); } .spaces-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .equipment-grid { grid-template-columns: 1fr 1fr; } .spaces-grid { grid-template-columns: 1fr; } .workflow-step::after { display: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip-nav" href="#main-content">Skip to main content</a>
+  <div id="preloader"><div class="preloader-logo">FW</div><div class="preloader-ring"></div></div>
+
+  <header id="navbar">
+    <nav class="container nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-mark">FW</div><div class="nav-logo-text"><span class="nav-logo-title">Foto World</span><span class="nav-logo-sub">Digital Colour Lab</span></div></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li><li><a href="team.html">Team</a></li><li><a href="lab.html" class="active">Lab</a></li>
+        <li><a href="reviews.html">Reviews</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta-wrap">
+        <button id="theme-toggle" aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></button>
+        <a href="booking.html" class="btn btn-primary btn-sm">Book Session</a>
+        <button id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+      </div>
+    </nav>
+  </header>
+  <div id="mobile-menu"><nav class="mobile-nav-links"><a href="index.html">🏠 Home</a><a href="about.html">📖 About</a><a href="services.html">✨ Services</a><a href="portfolio.html">🖼 Portfolio</a><a href="team.html">👥 Team</a><a href="lab.html">🔬 Lab</a><a href="reviews.html">⭐ Reviews</a><a href="blog.html">📝 Blog</a><a href="contact.html">📞 Contact</a></nav><div class="mobile-menu-footer"><a href="booking.html" class="btn btn-primary" style="flex:1;justify-content:center">Book a Session</a></div></div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="lab-hero">
+      <div class="lab-hero-content">
+        <nav aria-label="Breadcrumb"><ol class="breadcrumb" style="justify-content:center;margin-bottom:var(--space-6)"><li><a href="index.html" style="color:rgba(255,255,255,0.4)">Home</a></li><li class="breadcrumb-sep" style="color:rgba(255,255,255,0.2)">›</li><li style="color:var(--primary-gold)">Lab Experience</li></ol></nav>
+        <p class="section-label" style="justify-content:center;margin-bottom:var(--space-4);color:rgba(201,168,76,0.85)">State-of-the-Art Facility</p>
+        <h1 style="color:white;font-size:clamp(2.5rem,6vw,5rem)">The FOTO WORLD <span class="text-gradient-gold">Lab</span></h1>
+        <p style="color:rgba(255,255,255,0.6);font-size:var(--text-lg);max-width:60ch;margin:var(--space-4) auto 0">A professional 2,000 sq ft photography studio and digital colour lab equipped with the finest technology money can buy — right here in Tamil Nadu.</p>
+        <div class="lab-stat-strip">
+          <span><strong>2,000 sq ft</strong> Studio</span>
+          <span class="strip-sep">|</span>
+          <span><strong>Fujifilm DL600</strong> Lab Printer</span>
+          <span class="strip-sep">|</span>
+          <span><strong>Sony Cinema</strong> Cameras</span>
+          <span class="strip-sep">|</span>
+          <span><strong>DJI Drone</strong> Aerial</span>
+          <span class="strip-sep">|</span>
+          <span><strong>5</strong> Studio Spaces</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAB OVERVIEW -->
+    <section class="section" style="background:var(--bg-primary)">
+      <div class="container">
+        <div class="story-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-16);align-items:center">
+          <div class="reveal-left" style="border-radius:var(--radius-2xl);overflow:hidden;aspect-ratio:4/5;position:relative">
+            <img src="assets/images/studio_interior.png" alt="FOTO WORLD Studio Interior" style="width:100%;height:100%;object-fit:cover" />
+            <div style="position:absolute;bottom:var(--space-6);left:var(--space-6);background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);border:1px solid rgba(201,168,76,0.3);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-6)">
+              <div style="font-size:var(--text-xs);color:rgba(201,168,76,0.8);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:var(--space-1)">Since 2004</div>
+              <div style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;color:white">20 Years of<br>Excellence</div>
+            </div>
+          </div>
+          <div class="reveal-right" style="display:flex;flex-direction:column;gap:var(--space-6)">
+            <p class="section-label">About Our Facility</p>
+            <h2 class="section-title">A Studio Built for<br>Perfection</h2>
+            <p style="color:var(--text-secondary);line-height:1.8">Our purpose-built studio in MGM Nagar, Tamil Nadu spans over 2,000 square feet of professionally designed photography space. Every corner has been crafted with one goal in mind: creating the perfect environment for capturing extraordinary images.</p>
+            <p style="color:var(--text-secondary);line-height:1.8">From the seamless white cyclorama wall in our main portrait studio to the dedicated makeup and styling suite, from the professional Godox and Elinchrom lighting rigs to our Fujifilm DL600 colour lab — every element reflects our obsession with quality.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+              <div style="padding:var(--space-5);background:var(--bg-secondary);border-radius:var(--radius-xl);border:1px solid var(--border-subtle)">
+                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:900;color:var(--primary-gold)">2,000+</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">Square Feet</div>
+              </div>
+              <div style="padding:var(--space-5);background:var(--bg-secondary);border-radius:var(--radius-xl);border:1px solid var(--border-subtle)">
+                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:900;color:var(--primary-gold)">5</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">Dedicated Studio Zones</div>
+              </div>
+              <div style="padding:var(--space-5);background:var(--bg-secondary);border-radius:var(--radius-xl);border:1px solid var(--border-subtle)">
+                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:900;color:var(--primary-gold)">8+</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">Pro Equipment Units</div>
+              </div>
+              <div style="padding:var(--space-5);background:var(--bg-secondary);border-radius:var(--radius-xl);border:1px solid var(--border-subtle)">
+                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:900;color:var(--primary-gold)">4K</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">Cinema Video Output</div>
+              </div>
+            </div>
+            <a href="booking.html" class="btn btn-primary">Book a Studio Tour</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPMENT -->
+    <section class="section" style="background:var(--bg-secondary)">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Our Arsenal</p>
+          <h2 class="section-title">Professional Equipment</h2>
+          <p class="section-subtitle">We invest in the best tools so your photographs are never limited by gear.</p>
+        </div>
+        <div class="equipment-grid">
+          <div class="equip-card reveal">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <div class="equip-type">Camera</div>
+            <div class="equip-name">Sony Alpha A7R V</div>
+            <div class="equip-desc">61MP full-frame mirrorless — stunning resolution for fine art prints and portraits.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.06s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <div class="equip-type">Cinema</div>
+            <div class="equip-name">Sony ZV-E1</div>
+            <div class="equip-desc">Professional 4K cinema-grade video with S-Log3 colour science for dramatic grading.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.12s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            </div>
+            <div class="equip-type">Lab Printer</div>
+            <div class="equip-name">Fujifilm DL600</div>
+            <div class="equip-desc">Professional digital lab printer producing vibrant, fade-resistant prints up to 24 inches wide.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.18s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="equip-type">Aerial</div>
+            <div class="equip-name">DJI Mavic 3 Cine</div>
+            <div class="equip-desc">Cinema-grade aerial drone with Hasselblad optics for spectacular overhead wedding shots.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.24s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+            </div>
+            <div class="equip-type">Lighting</div>
+            <div class="equip-name">Godox AD600 Pro</div>
+            <div class="equip-desc">600W portable strobe system for consistent, powerful studio and outdoor lighting control.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.3s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="equip-type">Studio Strobe</div>
+            <div class="equip-name">Elinchrom ELC 500</div>
+            <div class="equip-desc">Industry-standard studio strobes with precise power control for flawless portrait lighting.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.36s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            </div>
+            <div class="equip-type">Large Format</div>
+            <div class="equip-name">Epson SC-P5000</div>
+            <div class="equip-desc">Large-format inkjet plotter for producing breathtaking wall-art canvases up to 44 inches wide.</div>
+          </div>
+          <div class="equip-card reveal" style="transition-delay:.42s">
+            <div class="equip-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+            </div>
+            <div class="equip-type">Editing Suite</div>
+            <div class="equip-name">Apple Mac Studio M2 Ultra</div>
+            <div class="equip-desc">Ultra-fast editing workstations with colour-calibrated 5K Retina displays for precision post-processing.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDIO SPACES -->
+    <section class="section" style="background:var(--bg-primary)">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Our Spaces</p>
+          <h2 class="section-title">Six Distinct Studio Zones</h2>
+          <p class="section-subtitle">Every zone is purpose-designed for a specific type of session — from bridal suites to printing labs.</p>
+        </div>
+        <div class="spaces-grid">
+          <article class="space-card reveal">
+            <div class="space-img"><img src="assets/images/studio_interior.png" alt="Main Portrait Studio" loading="lazy" /></div>
+            <div class="space-body">
+              <div class="space-tag">Studio 1</div>
+              <div class="space-name">Main Portrait Studio</div>
+              <p class="space-desc">Our flagship 800 sq ft portrait studio featuring seamless white and grey cyclorama walls, professional 4-point lighting rigs, and a wide range of backdrops and props.</p>
+            </div>
+          </article>
+          <article class="space-card reveal" style="transition-delay:.1s">
+            <div class="space-img" style="background:linear-gradient(135deg,#1a2010,#0a150a);display:flex;align-items:center;justify-content:center">
+              <div style="text-align:center;color:rgba(255,255,255,0.3)">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <div style="font-size:0.75rem;margin-top:0.5rem">Garden Studio</div>
+              </div>
+            </div>
+            <div class="space-body">
+              <div class="space-tag">Studio 2</div>
+              <div class="space-name">Outdoor Garden Area</div>
+              <p class="space-desc">A lush, landscaped outdoor garden perfect for natural-light portraits, pre-wedding shoots, maternity sessions and children's photography.</p>
+            </div>
+          </article>
+          <article class="space-card reveal" style="transition-delay:.2s">
+            <div class="space-img" style="background:linear-gradient(135deg,#200a15,#150008);display:flex;align-items:center;justify-content:center">
+              <div style="text-align:center;color:rgba(255,255,255,0.3)">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <div style="font-size:0.75rem;margin-top:0.5rem">Bridal Suite</div>
+              </div>
+            </div>
+            <div class="space-body">
+              <div class="space-tag">Studio 3</div>
+              <div class="space-name">Bridal Suite & Makeup Room</div>
+              <p class="space-desc">An elegant, private bridal preparation room with professional Hollywood mirror lighting, dedicated makeup station and a comfortable waiting lounge for the wedding party.</p>
+            </div>
+          </article>
+          <article class="space-card reveal" style="transition-delay:.3s">
+            <div class="space-img" style="background:linear-gradient(135deg,#0a0a1a,#080814);display:flex;align-items:center;justify-content:center">
+              <div style="text-align:center;color:rgba(255,255,255,0.3)">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <div style="font-size:0.75rem;margin-top:0.5rem">Print Lab</div>
+              </div>
+            </div>
+            <div class="space-body">
+              <div class="space-tag">Lab 1</div>
+              <div class="space-name">Printing & Framing Lab</div>
+              <p class="space-desc">Our climate-controlled printing lab houses the Fujifilm DL600, Epson SC-P5000 large format plotter, professional framing equipment and a museum-quality album binding station.</p>
+            </div>
+          </article>
+          <article class="space-card reveal" style="transition-delay:.4s">
+            <div class="space-img" style="background:linear-gradient(135deg,#0a1a10,#080e08);display:flex;align-items:center;justify-content:center">
+              <div style="text-align:center;color:rgba(255,255,255,0.3)">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <div style="font-size:0.75rem;margin-top:0.5rem">Editing Suite</div>
+              </div>
+            </div>
+            <div class="space-body">
+              <div class="space-tag">Suite 1</div>
+              <div class="space-name">Editing & Retouching Suite</div>
+              <p class="space-desc">A sound-proofed editing suite with Apple Mac Studio M2 Ultra workstations, colour-calibrated 5K Retina displays and professional Lightroom and Photoshop workflows.</p>
+            </div>
+          </article>
+          <article class="space-card reveal" style="transition-delay:.5s">
+            <div class="space-img" style="background:linear-gradient(135deg,#1a1208,#0e0c04);display:flex;align-items:center;justify-content:center">
+              <div style="text-align:center;color:rgba(255,255,255,0.3)">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <div style="font-size:0.75rem;margin-top:0.5rem">Client Lounge</div>
+              </div>
+            </div>
+            <div class="space-body">
+              <div class="space-tag">Lounge</div>
+              <div class="space-name">Client Viewing Lounge</div>
+              <p class="space-desc">A comfortable, beautifully furnished lounge where clients can view their edited gallery on a 55" 4K display, choose prints and approve final designs in a relaxed atmosphere.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKFLOW -->
+    <section class="section" style="background:var(--bg-secondary)">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Our Process</p>
+          <h2 class="section-title">From Booking to Delivery</h2>
+          <p class="section-subtitle">A seamless 5-step process designed around your convenience and satisfaction.</p>
+        </div>
+        <div class="workflow-steps">
+          <div class="workflow-step reveal">
+            <div class="workflow-circle">1</div>
+            <div class="workflow-label">Book</div>
+            <div class="workflow-sub">Choose your service and date online or by phone</div>
+          </div>
+          <div class="workflow-step reveal" style="transition-delay:.1s">
+            <div class="workflow-circle">2</div>
+            <div class="workflow-label">Shoot</div>
+            <div class="workflow-sub">Professional session at our studio or your venue</div>
+          </div>
+          <div class="workflow-step reveal" style="transition-delay:.2s">
+            <div class="workflow-circle">3</div>
+            <div class="workflow-label">Edit</div>
+            <div class="workflow-sub">Expert retouching, grading and album design</div>
+          </div>
+          <div class="workflow-step reveal" style="transition-delay:.3s">
+            <div class="workflow-circle">4</div>
+            <div class="workflow-label">Review</div>
+            <div class="workflow-sub">View your gallery online via client proofing portal</div>
+          </div>
+          <div class="workflow-step reveal" style="transition-delay:.4s">
+            <div class="workflow-circle">5</div>
+            <div class="workflow-label">Deliver</div>
+            <div class="workflow-sub">Digital files + premium prints delivered to you</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNOLOGY PARTNERS -->
+    <section class="section" style="background:var(--bg-primary)">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Technology Partners</p>
+          <h2 class="section-title">Trusted by the World's Best Brands</h2>
+        </div>
+        <div class="partners-strip">
+          <div class="partner-chip">🎞 Fujifilm</div>
+          <div class="partner-chip">📷 Sony</div>
+          <div class="partner-chip">🖨 Epson</div>
+          <div class="partner-chip">🚁 DJI</div>
+          <div class="partner-chip">💡 Godox</div>
+          <div class="partner-chip">⚡ Elinchrom</div>
+          <div class="partner-chip">🍎 Apple</div>
+          <div class="partner-chip">🎨 Adobe</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOK TOUR CTA -->
+    <section class="cta-banner">
+      <div class="cta-banner-bg"><img src="assets/images/studio_interior.png" alt="Studio Interior" /><div class="cta-banner-overlay"></div></div>
+      <div class="cta-banner-content reveal">
+        <h2 class="cta-banner-title">Visit Our Studio<br>in Person</h2>
+        <p class="cta-banner-sub">Schedule a complimentary studio tour and see the magic before you book your session.</p>
+        <div class="hero-ctas">
+          <a href="booking.html" class="btn btn-primary btn-xl">Book a Tour</a>
+          <a href="contact.html" class="btn btn-white btn-xl">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><a href="index.html" class="footer-logo"><div class="footer-logo-mark">FW</div><div><div class="brand-name">Foto World</div><div class="brand-sub">Digital Colour Lab & Studio</div></div></a><p class="footer-tagline">"Where every frame tells a story."</p></div>
+    <nav><div class="footer-col-title">Quick Links</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="team.html">Our Team</a></li></ul></nav>
+    <nav><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Wedding Photography</a></li><li><a href="services.html">Cinematography</a></li><li><a href="services.html">Printing</a></li><li><a href="services.html">Portraits</a></li></ul></nav>
+    <address style="font-style:normal"><div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="footer-contact-text">MGM Nagar, Tamil Nadu</span></div>
+      <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.71a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="footer-contact-text"><a href="tel:+919876543210">+91 98765 43210</a></span></div>
+    </address>
+  </div></div>
+  <div class="footer-bottom"><div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4)"><p class="footer-bottom-text">© 2026 FOTO WORLD Digital Colour Lab & Studio. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a></div></div></div>
+  </footer>
+
+  <a id="whatsapp-fab" href="https://wa.me/919876543210" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg></a>
+  <button id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+/* ============================================
+   FOTO WORLD — Responsive Breakpoints
+   ============================================ */
+
+/* ── 1440px: Large Desktop ── */
+@media (max-width: 1440px) {
+  :root {
+    --container-max: 1200px;
+  }
+}
+
+/* ── 1280px: Desktop ── */
+@media (max-width: 1280px) {
+  .footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── 1024px: Tablet Landscape ── */
+@media (max-width: 1024px) {
+  /* Nav */
+  .nav-links { display: none; }
+  #hamburger { display: flex; }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  /* Grids */
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-auto-lg { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+
+  /* Page hero */
+  .page-hero {
+    min-height: 40vh;
+  }
+}
+
+/* ── 768px: Tablet Portrait ── */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+    --nav-height-scrolled: 56px;
+  }
+
+  /* Typography scale down */
+  h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); }
+  h2 { font-size: clamp(1.5rem, 5vw, 2.25rem); }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  /* Grids */
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Section spacing */
+  .section {
+    padding: clamp(3rem, 8vw, 5rem) 0;
+  }
+
+  /* Buttons full-width on mobile */
+  .btn-group-mobile-full .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Lightbox nav */
+  .lightbox-prev { left: var(--space-2); }
+  .lightbox-next { right: var(--space-2); }
+
+  /* Modal */
+  .modal {
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+  }
+
+  /* WhatsApp & Back-to-top */
+  #whatsapp-fab { bottom: 20px; right: 20px; }
+  #back-to-top { bottom: 90px; right: 20px; }
+}
+
+/* ── 640px: Large Mobile ── */
+@media (max-width: 640px) {
+  .grid-4 { grid-template-columns: 1fr; }
+
+  .nav-logo-sub { display: none; }
+
+  /* Section header */
+  .section-header {
+    margin-bottom: var(--space-10);
+  }
+
+  /* Footer */
+  .footer-social { flex-wrap: wrap; }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    flex-wrap: wrap;
+  }
+}
+
+/* ── 480px: Mobile ── */
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 1.25rem;
+  }
+
+  /* Typography */
+  h1 { font-size: clamp(1.5rem, 8vw, 2rem); }
+  h2 { font-size: clamp(1.25rem, 6vw, 1.75rem); }
+  h3 { font-size: clamp(1.1rem, 5vw, 1.375rem); }
+
+  /* Buttons */
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--text-xs);
+  }
+
+  .btn-lg, .btn-xl {
+    padding: 0.875rem 1.75rem;
+    font-size: var(--text-sm);
+  }
+
+  /* Nav logo text */
+  .nav-logo-title { font-size: var(--text-sm); }
+
+  /* Cards */
+  .card-service { padding: var(--space-6); }
+  .card-review { padding: var(--space-6); }
+
+  /* Counter numbers */
+  .counter-number {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  /* Team card image */
+  .card-team .team-image-wrap { height: 250px; }
+}
+
+/* ── Print Styles ── */
+@media print {
+  #navbar, #footer, #whatsapp-fab, #back-to-top, .btn {
+    display: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    color: black;
+    background: white;
+  }
+
+  a {
+    text-decoration: underline;
+    color: black;
+  }
+}
+
+/* ── High Contrast / Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Dark Mode Specific Responsive ── */
+[data-theme="dark"] .nav-logo-title { color: var(--text-primary); }
+
+/* ── Service card grid responsive ── */
+@media (max-width: 1024px) {
+  .services-tabs-content .grid-auto-md {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .services-tabs-content .grid-auto-md {
+    grid-template-columns: 1fr;
+  }
+
+  .team-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* ── Portfolio Masonry Responsive ── */
+@media (max-width: 1024px) {
+  .masonry-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .masonry-grid {
+    column-count: 1;
+  }
+}
+
+/* ── Booking Form Responsive ── */
+@media (max-width: 768px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    gap: var(--space-2);
+  }
+}
+
+/* ── Contact Page Responsive ── */
+@media (max-width: 768px) {
+  .contact-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Blog Grid Responsive ── */
+@media (max-width: 768px) {
+  .blog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-sidebar {
+    order: -1;
+  }
+}
+
+/* ── Timeline Responsive ── */
+@media (max-width: 768px) {
+  .timeline-item {
+    grid-template-columns: auto 1fr !important;
+    padding-left: 0 !important;
+  }
+
+  .timeline-item .timeline-year {
+    display: none;
+  }
+}
+
+/* ── Hero Responsive ── */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 100svh;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+}
+
+/* ── Trust Bar Responsive ── */
+@media (max-width: 640px) {
+  .trust-bar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Statistics Grid Responsive ── */
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Photo Proofing Portal | FOTO WORLD</title>
+  <meta name="description" content="Securely view, favourite and download your photographs through the FOTO WORLD private client proofing portal." />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/pages/booking.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    /* Proofing-specific overrides */
+    body { overflow-x: hidden; }
+    .proof-header { background: linear-gradient(135deg, #0A0A0A, #1A1208); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: var(--z-header); border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .proof-logo { font-family: var(--font-display); font-weight: var(--weight-black); color: var(--primary-gold); font-size: var(--text-xl); text-decoration: none; letter-spacing: 0.05em; }
+    .proof-session-info { display: flex; flex-direction: column; align-items: flex-end; }
+    .proof-session-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: white; }
+    .proof-session-meta { font-size: var(--text-xs); color: rgba(255,255,255,0.4); }
+    .proof-action-bar { background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); position: sticky; top: 72px; z-index: 50; }
+    .favourites-count { background: var(--primary-gold); color: white; border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); font-size: var(--text-xs); font-weight: var(--weight-bold); }
+  </style>
+</head>
+<body>
+  <div id="preloader"><div class="preloader-logo">FW</div><div class="preloader-ring"></div></div>
+
+  <!-- ── LOGIN SCREEN ── -->
+  <div class="proofing-login" id="login-screen">
+    <div class="proofing-login-card">
+      <div style="text-align:center;margin-bottom:var(--space-8)">
+        <a href="index.html" style="font-family:var(--font-display);font-weight:900;font-size:var(--text-3xl);color:var(--primary-gold);text-decoration:none;letter-spacing:0.1em">FW</a>
+        <h1 style="color:white;font-size:var(--text-2xl);margin-top:var(--space-4);margin-bottom:var(--space-2)">Client Portal</h1>
+        <p style="color:rgba(255,255,255,0.5);font-size:var(--text-sm)">Enter your gallery access code to view your photographs</p>
+      </div>
+
+      <form id="login-form" novalidate style="display:flex;flex-direction:column;gap:var(--space-4)">
+        <div class="form-group">
+          <label class="form-label" for="client-code" style="color:rgba(255,255,255,0.7)">Gallery Code</label>
+          <input type="text" id="client-code" class="form-input" placeholder="e.g. PRIYA2024" autocomplete="off" style="font-size:var(--text-lg);letter-spacing:0.1em;text-transform:uppercase;text-align:center" />
+          <span class="form-error" id="login-error">Incorrect gallery code. Try: DEMO2024</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="client-password" style="color:rgba(255,255,255,0.7)">Password</label>
+          <input type="password" id="client-password" class="form-input" placeholder="Your password" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="justify-content:center">View My Gallery</button>
+        <a href="#" onclick="demoLogin(event)" style="text-align:center;font-size:var(--text-sm);color:rgba(201,168,76,0.7)">Try Demo Gallery →</a>
+      </form>
+
+      <div style="margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid rgba(255,255,255,0.08);text-align:center">
+        <p style="color:rgba(255,255,255,0.4);font-size:var(--text-xs)">Having trouble? Contact us at</p>
+        <a href="tel:+919876543210" style="color:var(--primary-gold);font-size:var(--text-sm);font-weight:600">+91 98765 43210</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GALLERY SCREEN ── -->
+  <div class="proofing-gallery" id="gallery-screen">
+    <!-- Header -->
+    <header class="proof-header">
+      <a href="index.html" class="proof-logo">FW PROOFING</a>
+      <div class="proof-session-info">
+        <div class="proof-session-name" id="session-name-display">Demo Gallery</div>
+        <div class="proof-session-meta" id="session-meta-display">Session Date: June 2024</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="logoutPortal()" style="color:rgba(255,255,255,0.5)">← Back to Login</button>
+    </header>
+
+    <!-- Action Bar -->
+    <div class="proof-action-bar">
+      <div style="display:flex;align-items:center;gap:var(--space-4)">
+        <span style="font-weight:600;font-size:var(--text-sm)">Your Gallery</span>
+        <span id="photo-count-badge" class="badge badge-subtle">12 photos</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:var(--text-muted)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--primary-gold)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>Favourites: <span class="favourites-count" id="fav-count-badge">0</span></span>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="showOnlyFavourites()" id="fav-filter-btn">Show Favourites</button>
+        <button class="btn btn-primary btn-sm" onclick="requestPrints()">📥 Request Prints</button>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <main style="padding:var(--space-8) var(--space-6)">
+      <div class="proof-grid" id="proof-grid">
+        <!-- Generated by JS -->
+      </div>
+
+      <!-- Empty state for favourites filter -->
+      <div id="fav-empty" style="display:none;text-align:center;padding:var(--space-20) 0">
+        <div style="font-size:4rem;margin-bottom:var(--space-4)">💛</div>
+        <h3 style="font-size:var(--text-xl);margin-bottom:var(--space-2)">No Favourites Yet</h3>
+        <p style="color:var(--text-muted);margin-bottom:var(--space-6)">Click the heart icon on any photo to mark it as a favourite.</p>
+        <button class="btn btn-secondary" onclick="showAllPhotos()">Show All Photos</button>
+      </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox-container" id="proof-lightbox" style="flex-direction:column">
+      <button onclick="closeProofLightbox()" style="position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.25rem;z-index:10" aria-label="Close">✕</button>
+      <div class="lightbox-main">
+        <img id="proof-lb-img" src="" alt="Photo" />
+      </div>
+      <div style="margin-top:var(--space-6);display:flex;gap:var(--space-4);align-items:center">
+        <button class="proof-action-btn" id="lb-fav-btn" onclick="toggleFavFromLb()" aria-label="Favourite" title="Favourite">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <span id="lb-photo-label" style="color:rgba(255,255,255,0.6);font-size:var(--text-sm)"></span>
+        <a id="lb-download-btn" href="#" download style="margin-left:auto"><button class="proof-action-btn" title="Download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button></a>
+      </div>
+    </div>
+
+    <!-- Request Prints Modal -->
+    <div id="prints-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:var(--space-8)">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-2xl);padding:var(--space-10);max-width:520px;width:100%">
+        <h2 style="font-size:var(--text-2xl);margin-bottom:var(--space-4)">Request Prints</h2>
+        <p style="color:var(--text-muted);margin-bottom:var(--space-6)">Your <strong id="fav-print-count">0</strong> favourited photos will be sent to our lab for printing. Our team will contact you to confirm sizes and finishes.</p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap">
+          <a id="print-whatsapp-btn" href="#" target="_blank" class="btn btn-primary" onclick="document.getElementById('prints-modal').style.display='none'">Send via WhatsApp</a>
+          <button class="btn btn-ghost" onclick="document.getElementById('prints-modal').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/proofing.js"></script>
+</body>
+</html>

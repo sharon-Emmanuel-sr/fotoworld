@@ -1,0 +1,556 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | Photography Tips & Stories | FOTO WORLD</title>
+  <meta name="description" content="Expert photography tips, behind-the-scenes stories, printing guides and wedding inspiration from the FOTO WORLD team in Tamil Nadu." />
+  <link rel="canonical" href="https://fotoworldstudio.com/blog.html" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/pages/booking.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    /* â”€â”€ BLOG PAGE STYLES â”€â”€ */
+    .featured-post-hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      border-radius: var(--radius-2xl);
+      margin-bottom: var(--space-12);
+      cursor: pointer;
+    }
+    .featured-post-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .featured-post-hero:hover img { transform: scale(1.03); }
+    .featured-post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.1) 100%);
+    }
+    .featured-post-content {
+      position: relative;
+      z-index: 1;
+      padding: var(--space-10) var(--space-10) var(--space-10);
+      max-width: 700px;
+    }
+    .featured-cat-badge {
+      display: inline-block;
+      background: var(--primary-gold);
+      color: white;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: var(--space-1) var(--space-4);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+    }
+    .featured-post-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      font-weight: var(--weight-bold);
+      color: white;
+      line-height: 1.25;
+      margin-bottom: var(--space-4);
+    }
+    .featured-post-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      font-size: var(--text-sm);
+      color: rgba(255,255,255,0.55);
+      flex-wrap: wrap;
+    }
+    .featured-read-more {
+      margin-top: var(--space-6);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--primary-gold-light);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-decoration: none;
+      transition: gap var(--transition-fast);
+    }
+    .featured-read-more:hover { gap: var(--space-3); }
+
+    /* Blog layout */
+    .blog-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    /* Blog post card */
+    .blog-post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all var(--transition-base);
+    }
+    .blog-post-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(201,168,76,0.2);
+    }
+    .blog-post-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .blog-post-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .blog-post-card:hover .blog-post-img img { transform: scale(1.05); }
+    .blog-cat-pill {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+      background: var(--primary-gold);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+    }
+    .blog-post-body { padding: var(--space-6); }
+    .blog-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-bottom: var(--space-3);
+      transition: color var(--transition-fast);
+    }
+    .blog-post-card:hover .blog-card-title { color: var(--primary-gold); }
+    .blog-card-excerpt {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-4);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-subtle);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    .blog-read-more {
+      color: var(--primary-gold);
+      font-weight: 600;
+      font-size: var(--text-xs);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap var(--transition-fast);
+    }
+    .blog-read-more:hover { gap: 8px; }
+
+    /* Sidebar */
+    .blog-sidebar { position: sticky; top: calc(var(--nav-height) + var(--space-6)); display: flex; flex-direction: column; gap: var(--space-6); }
+    .sidebar-widget {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+    .sidebar-widget-title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: var(--weight-bold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .search-input-wrap { position: relative; }
+    .search-input-wrap input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); color: var(--text-primary); font-size: var(--text-sm); }
+    .search-input-wrap input:focus { border-color: var(--primary-gold); outline: none; }
+    .search-input-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 16px; height: 16px; }
+    .cat-filter-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+    }
+    .cat-filter-item:hover, .cat-filter-item.active { background: rgba(201,168,76,0.08); color: var(--primary-gold); }
+    .cat-count { font-size: 11px; background: var(--bg-secondary); padding: 2px 8px; border-radius: var(--radius-full); color: var(--text-muted); }
+    .recent-post-item {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+    }
+    .recent-post-item:last-child { border-bottom: none; }
+    .recent-post-thumb { width: 56px; height: 56px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; }
+    .recent-post-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .recent-post-info .rp-title { font-size: var(--text-sm); font-weight: 600; color: var(--text-primary); line-height: 1.4; margin-bottom: 4px; }
+    .recent-post-info .rp-date { font-size: 11px; color: var(--text-muted); }
+
+    /* Newsletter CTA */
+    .newsletter-cta {
+      background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10);
+      text-align: center;
+      color: white;
+    }
+    .newsletter-form { display: flex; gap: var(--space-3); margin-top: var(--space-6); max-width: 500px; margin-left: auto; margin-right: auto; }
+    .newsletter-form input { flex: 1; padding: 0.875rem 1.25rem; background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); border-radius: var(--radius-full); color: white; font-size: var(--text-sm); }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.6); }
+    .newsletter-form input:focus { outline: none; border-color: white; background: rgba(255,255,255,0.25); }
+    .newsletter-form button { padding: 0.875rem 2rem; background: white; color: var(--primary-gold-dark); border: none; border-radius: var(--radius-full); font-weight: 700; font-size: var(--text-sm); cursor: pointer; white-space: nowrap; transition: all var(--transition-fast); }
+    .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+    @media (max-width: 1024px) { .blog-layout { grid-template-columns: 1fr; } .blog-sidebar { position: static; } }
+    @media (max-width: 640px) { .featured-post-hero { min-height: 380px; } .featured-post-content { padding: var(--space-6); } .newsletter-form { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <a class="skip-nav" href="#main-content">Skip to main content</a>
+  <div id="preloader"><div class="preloader-logo">FW</div><div class="preloader-ring"></div></div>
+
+  <header id="navbar">
+    <nav class="container nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-mark">FW</div><div class="nav-logo-text"><span class="nav-logo-title">Foto World</span><span class="nav-logo-sub">Digital Colour Lab</span></div></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li><li><a href="team.html">Team</a></li><li><a href="lab.html">Lab</a></li>
+        <li><a href="reviews.html">Reviews</a></li><li><a href="blog.html" class="active">Blog</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta-wrap">
+        <button id="theme-toggle" aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></button>
+        <a href="booking.html" class="btn btn-primary btn-sm">Book Session</a>
+        <button id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+      </div>
+    </nav>
+  </header>
+  <div id="mobile-menu"><nav class="mobile-nav-links"><a href="index.html">ðŸ  Home</a><a href="about.html">ðŸ“– About</a><a href="services.html">âœ¨ Services</a><a href="portfolio.html">ðŸ–¼ Portfolio</a><a href="team.html">ðŸ‘¥ Team</a><a href="lab.html">ðŸ”¬ Lab</a><a href="reviews.html">â­ Reviews</a><a href="blog.html">ðŸ“ Blog</a><a href="contact.html">ðŸ“ž Contact</a></nav><div class="mobile-menu-footer"><a href="booking.html" class="btn btn-primary" style="flex:1;justify-content:center">Book a Session</a></div></div>
+
+  <main id="main-content">
+    <!-- PAGE HERO -->
+    <div class="page-hero" style="background:linear-gradient(135deg,#0A0A0A,#1A1208)">
+      <div class="page-hero-content">
+        <p class="section-label" style="justify-content:center;color:rgba(201,168,76,0.8);margin-bottom:var(--space-4)">Photography Tips & Stories</p>
+        <h1 style="color:white">The FOTO WORLD <span class="text-gradient-gold">Blog</span></h1>
+        <p style="color:rgba(255,255,255,0.6);margin:0 auto;max-width:55ch">Expert advice, behind-the-scenes stories, and inspiration from Tamil Nadu's premier photography studio.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+
+        <!-- FEATURED POST -->
+        <div class="featured-post-hero reveal" role="article" aria-label="Featured blog post">
+          <img src="assets/images/hero_wedding.png" alt="Featured: Complete Guide to Wedding Photography Planning" />
+          <div class="featured-post-hero-overlay"></div>
+          <div class="featured-post-content">
+            <span class="featured-cat-badge">Wedding Tips</span>
+            <h2 class="featured-post-title">The Complete Guide to Planning Your Dream Wedding Photography in Tamil Nadu</h2>
+            <div class="featured-post-meta">
+              <span>âœï¸ Rajan Kumar</span>
+              <span>ðŸ“… 2 June 2026</span>
+              <span>â± 8 min read</span>
+              <span>ðŸ‘ 2.4k views</span>
+            </div>
+            <p style="color:rgba(255,255,255,0.65);font-size:var(--text-sm);line-height:1.7;margin-top:var(--space-4)">From choosing the right photographer to preparing a shot list for your big day â€” our founder shares 20 years of wedding photography wisdom in this comprehensive guide every Tamil Nadu couple should read before booking.</p>
+            <a href="#" class="featured-read-more">Read Full Article â†’</a>
+          </div>
+        </div>
+
+        <!-- BLOG LAYOUT: GRID + SIDEBAR -->
+        <div class="blog-layout">
+          <!-- MAIN BLOG GRID -->
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)" id="blog-posts-grid">
+
+              <article class="blog-post-card reveal" data-category="wedding-tips">
+                <div class="blog-post-img">
+                  <img src="assets/images/portfolio_wedding1.png" alt="10 Things to Tell Your Wedding Photographer" loading="lazy" />
+                  <span class="blog-cat-pill">Wedding Tips</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">10 Things to Tell Your Wedding Photographer Before the Big Day</h3>
+                  <p class="blog-card-excerpt">Great wedding photos start with a great briefing. Here's exactly what information to share with your photographer weeks before the wedding â€” from family dynamics to your favourite shots.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 28 May 2026 Â· 6 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.08s" data-category="portrait-tips">
+                <div class="blog-post-img">
+                  <img src="assets/images/portfolio_portrait1.png" alt="How to Look Your Best in Professional Portraits" loading="lazy" />
+                  <span class="blog-cat-pill">Portrait Tips</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">How to Look Your Best in Professional Portraits</h3>
+                  <p class="blog-card-excerpt">Feeling camera-shy? Our senior photographer Arjun shares his top tips on posing, wardrobe, and mindset to ensure your portrait session produces stunning, confidence-boosting results.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 20 May 2026 Â· 5 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.16s" data-category="behind-scenes">
+                <div class="blog-post-img">
+                  <img src="assets/images/studio_interior.png" alt="Inside FOTO WORLD Studio Tour" loading="lazy" />
+                  <span class="blog-cat-pill">Behind the Scenes</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">Inside FOTO WORLD: A Virtual Tour of Our Premium Studio</h3>
+                  <p class="blog-card-excerpt">Ever wondered what goes on behind the scenes at FOTO WORLD? Join us for a virtual walkthrough of our 2,000 sq ft studio, from the main portrait space to the Fujifilm printing lab and editing suite.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 14 May 2026 Â· 4 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.24s" data-category="printing-guide">
+                <div class="blog-post-img">
+                  <img src="assets/images/blog_thumbnail1.png" alt="Understanding Print Quality Fujifilm" loading="lazy" />
+                  <span class="blog-cat-pill">Printing Guide</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">Understanding Print Quality: Why Fujifilm Paper Makes a Difference</h3>
+                  <p class="blog-card-excerpt">Not all prints are equal. Our lab specialist Vijay explains the science of photographic paper, the advantages of Fujifilm archival media, and why your treasured memories deserve the best.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 8 May 2026 Â· 7 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.32s" data-category="cinematography">
+                <div class="blog-post-img">
+                  <img src="assets/images/portfolio_engagement.png" alt="4K Raw to Cinematic Film Editing Process" loading="lazy" />
+                  <span class="blog-cat-pill">Cinematography</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">From 4K Raw to Cinematic Film: Our Video Editing Process Explained</h3>
+                  <p class="blog-card-excerpt">A wedding film doesn't just happen in front of the camera â€” the real magic unfolds in our editing suite. Discover how we transform raw 4K Sony footage into the emotional masterpieces our clients love.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 1 May 2026 Â· 6 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.4s" data-category="wedding-tips">
+                <div class="blog-post-img">
+                  <img src="assets/images/hero_wedding.png" alt="Best Outdoor Locations Pre-Wedding Tamil Nadu" loading="lazy" />
+                  <span class="blog-cat-pill">Wedding Tips</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">The Best Outdoor Locations for Pre-Wedding Shoots in Tamil Nadu</h3>
+                  <p class="blog-card-excerpt">From the majestic temples of Madurai to the serene backwaters of Kumbakonam â€” here are our top 10 favourite locations for romantic, cinematic pre-wedding photography sessions in Tamil Nadu.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 22 Apr 2026 Â· 5 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.48s" data-category="portrait-tips">
+                <div class="blog-post-img">
+                  <img src="assets/images/portfolio_kids.png" alt="Maternity Photography Guide for Expecting Mothers" loading="lazy" />
+                  <span class="blog-cat-pill">Portrait Tips</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">Maternity Photography: A Complete Guide for Expecting Mothers</h3>
+                  <p class="blog-card-excerpt">When is the best time for a maternity shoot? What to wear? How to prepare your skin and hair? Our team walks you through everything you need to know to make your maternity session unforgettable.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 15 Apr 2026 Â· 6 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="blog-post-card reveal" style="transition-delay:.56s" data-category="studio-life">
+                <div class="blog-post-img">
+                  <img src="assets/images/blog_thumbnail1.png" alt="Wedding Album Design Secrets" loading="lazy" />
+                  <span class="blog-cat-pill">Studio Life</span>
+                </div>
+                <div class="blog-post-body">
+                  <h3 class="blog-card-title">Album Design Secrets: How We Create Your Perfect Wedding Story</h3>
+                  <p class="blog-card-excerpt">A wedding album is the one physical heirloom you'll pass down for generations. Deepa, our senior editor, reveals the artful process behind selecting, sequencing and designing your perfect album layout.</p>
+                  <div class="blog-card-footer">
+                    <span>ðŸ“… 8 Apr 2026 Â· 5 min</span>
+                    <a href="#" class="blog-read-more">Read â†’</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Load More -->
+            <div style="text-align:center;margin-top:var(--space-10)">
+              <button class="btn btn-secondary btn-lg" onclick="this.textContent='No more posts to load';this.disabled=true;this.style.opacity='0.5'">Load More Articles</button>
+            </div>
+          </div>
+
+          <!-- SIDEBAR -->
+          <aside class="blog-sidebar">
+            <!-- Search -->
+            <div class="sidebar-widget">
+              <div class="sidebar-widget-title">Search Articles</div>
+              <div class="search-input-wrap">
+                <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="search" id="blog-search" placeholder="Search articles..." aria-label="Search blog posts" />
+              </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-widget">
+              <div class="sidebar-widget-title">Categories</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-1)">
+                <div class="cat-filter-item active" data-category="all">All Articles <span class="cat-count">8</span></div>
+                <div class="cat-filter-item" data-category="wedding-tips">Wedding Tips <span class="cat-count">2</span></div>
+                <div class="cat-filter-item" data-category="portrait-tips">Portrait Tips <span class="cat-count">2</span></div>
+                <div class="cat-filter-item" data-category="behind-scenes">Behind the Scenes <span class="cat-count">1</span></div>
+                <div class="cat-filter-item" data-category="printing-guide">Printing Guide <span class="cat-count">1</span></div>
+                <div class="cat-filter-item" data-category="cinematography">Cinematography <span class="cat-count">1</span></div>
+                <div class="cat-filter-item" data-category="studio-life">Studio Life <span class="cat-count">1</span></div>
+              </div>
+            </div>
+
+            <!-- Recent Posts -->
+            <div class="sidebar-widget">
+              <div class="sidebar-widget-title">Recent Posts</div>
+              <div class="recent-post-item">
+                <div class="recent-post-thumb"><img src="assets/images/portfolio_wedding1.png" alt="Recent post" loading="lazy" /></div>
+                <div class="recent-post-info">
+                  <div class="rp-title">10 Things to Tell Your Wedding Photographer</div>
+                  <div class="rp-date">ðŸ“… 28 May 2026</div>
+                </div>
+              </div>
+              <div class="recent-post-item">
+                <div class="recent-post-thumb"><img src="assets/images/portfolio_portrait1.png" alt="Recent post" loading="lazy" /></div>
+                <div class="recent-post-info">
+                  <div class="rp-title">How to Look Your Best in Portraits</div>
+                  <div class="rp-date">ðŸ“… 20 May 2026</div>
+                </div>
+              </div>
+              <div class="recent-post-item">
+                <div class="recent-post-thumb"><img src="assets/images/blog_thumbnail1.png" alt="Recent post" loading="lazy" /></div>
+                <div class="recent-post-info">
+                  <div class="rp-title">Fujifilm Print Quality Guide</div>
+                  <div class="rp-date">ðŸ“… 8 May 2026</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Book CTA -->
+            <div style="background:linear-gradient(135deg,#0A0A0A,#1A1208);border-radius:var(--radius-xl);padding:var(--space-6);text-align:center">
+              <div style="font-size:2rem;margin-bottom:var(--space-3)">ðŸ“¸</div>
+              <div style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;color:white;margin-bottom:var(--space-2)">Ready to Book?</div>
+              <p style="font-size:var(--text-sm);color:rgba(255,255,255,0.5);margin-bottom:var(--space-5)">Let's create something beautiful together.</p>
+              <a href="booking.html" class="btn btn-primary btn-sm" style="width:100%;justify-content:center">Book a Session</a>
+            </div>
+
+            <!-- Tags -->
+            <div class="sidebar-widget">
+              <div class="sidebar-widget-title">Popular Tags</div>
+              <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Wedding</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Tamil Nadu</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Portraits</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Fujifilm</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">4K Video</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Baby</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Printing</span>
+                <span style="padding:var(--space-1) var(--space-3);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:11px;color:var(--text-muted);cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary-gold)';this.style.color='var(--primary-gold)'" onmouseout="this.style.borderColor='';this.style.color=''">Album</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- NEWSLETTER CTA -->
+        <div class="newsletter-cta reveal" style="margin-top:var(--space-16)">
+          <p style="font-size:var(--text-xs);letter-spacing:0.15em;text-transform:uppercase;opacity:0.75;margin-bottom:var(--space-3)">ðŸ“§ FOTO WORLD Newsletter</p>
+          <h2 style="color:white;font-size:clamp(1.5rem,3vw,2.25rem);margin-bottom:var(--space-3)">Get Photography Tips in Your Inbox</h2>
+          <p style="color:rgba(255,255,255,0.8);max-width:55ch;margin:0 auto">Join 2,400+ photographers and photography lovers who receive our monthly tips, behind-the-scenes stories, and exclusive offers.</p>
+          <form class="newsletter-form" id="newsletter-form" novalidate>
+            <input type="email" placeholder="Your email address" required aria-label="Email address for newsletter" />
+            <button type="submit">Subscribe Free</button>
+          </form>
+          <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:var(--space-4)">We respect your privacy. Unsubscribe anytime. No spam, ever.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><a href="index.html" class="footer-logo"><div class="footer-logo-mark">FW</div><div><div class="brand-name">Foto World</div><div class="brand-sub">Digital Colour Lab & Studio</div></div></a><p class="footer-tagline">"Where every frame tells a story."</p></div>
+    <nav><div class="footer-col-title">Quick Links</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="team.html">Team</a></li></ul></nav>
+    <nav><div class="footer-col-title">Blog Topics</div><ul class="footer-links"><li><a href="#">Wedding Tips</a></li><li><a href="#">Portrait Tips</a></li><li><a href="#">Printing Guide</a></li><li><a href="#">Behind the Scenes</a></li></ul></nav>
+    <address style="font-style:normal"><div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.71a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="footer-contact-text"><a href="tel:+919876543210">+91 98765 43210</a></span></div>
+    </address>
+  </div></div>
+  <div class="footer-bottom"><div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4)"><p class="footer-bottom-text">Â© 2026 FOTO WORLD Digital Colour Lab & Studio.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a></div></div></div>
+  </footer>
+
+  <a id="whatsapp-fab" href="https://wa.me/919876543210" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg></a>
+  <button id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/blog.js"></script>
+  <script>
+    // Category filter
+    document.querySelectorAll('.cat-filter-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.cat-filter-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const cat = item.dataset.category;
+        document.querySelectorAll('.blog-post-card').forEach(card => {
+          if (cat === 'all' || card.dataset.category === cat) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+  <script src="js/api.js"></script>
+</body>
+</html>
+
