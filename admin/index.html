@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>Admin Dashboard | FOTO WORLD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
@@ -16,141 +17,192 @@
       --green: #22c55e; --red: #ef4444; --blue: #3b82f6; --amber: #f59e0b;
       --radius: 10px; --radius-sm: 6px; --radius-lg: 16px;
       --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --sidebar-w: 230px;
     }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
 
-    /* ── LOGIN ── */
-    #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: radial-gradient(ellipse at 50% 40%, rgba(201,168,76,0.06) 0%, transparent 70%); }
-    .login-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 48px 40px; width: 380px; }
-    .login-logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); text-align: center; margin-bottom: 8px; }
-    .login-sub  { text-align: center; color: var(--text3); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 36px; }
-    .form-field { margin-bottom: 16px; }
-    .form-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 6px; letter-spacing: .04em; }
-    .form-field input { width: 100%; padding: 11px 14px; background: var(--bg3); border: 1.5px solid var(--border2); border-radius: var(--radius); color: var(--text); font-size: 14px; transition: border-color .2s; }
-    .form-field input:focus { outline: none; border-color: var(--gold); }
-    .login-error { color: var(--red); font-size: 12px; margin-bottom: 12px; display: none; }
-    .btn-login { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: white; font-weight: 700; border: none; border-radius: var(--radius); cursor: pointer; font-size: 14px; transition: opacity .2s; }
-    .btn-login:hover { opacity: .9; }
+    /* ── LOADER ── */
+    #page-loader { position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:16px; }
+    .loader-logo { font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--gold); }
+    .loader-bar { width:200px;height:3px;background:var(--bg3);border-radius:99px;overflow:hidden; }
+    .loader-bar-fill { height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:99px;animation:loadpulse 1.2s ease-in-out infinite; }
+    @keyframes loadpulse { 0%{width:0%} 50%{width:70%} 100%{width:100%} }
 
-    /* ── LAYOUT ── */
-    #app { display: none; min-height: 100vh; }
-    .app-layout { display: flex; min-height: 100vh; }
+    /* ── LOGIN ── */
+    #login-screen { display:none;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 40%,rgba(201,168,76,0.08) 0%,transparent 70%); }
+    .login-card { background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:48px 40px;width:400px;max-width:95vw; }
+    .login-logo { font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);text-align:center;margin-bottom:4px; }
+    .login-sub  { text-align:center;color:var(--text3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:36px; }
+    .form-field { margin-bottom:18px; }
+    .form-field label { display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase; }
+    .form-field input { width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:14px;transition:border-color .2s; }
+    .form-field input:focus { outline:none;border-color:var(--gold); }
+    .login-error { color:var(--red);font-size:12px;margin-bottom:14px;display:none;padding:10px 14px;background:rgba(239,68,68,.08);border-radius:var(--radius-sm);border-left:3px solid var(--red); }
+    .btn-login { width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#000;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer;font-size:14px;letter-spacing:.04em;transition:opacity .2s; }
+    .btn-login:hover { opacity:.9; }
+    .btn-login:disabled { opacity:.5;cursor:not-allowed; }
+
+    /* ── APP LAYOUT ── */
+    #app { display:none; }
+    .app-layout { display:flex;min-height:100vh; }
 
     /* ── SIDEBAR ── */
-    .sidebar { width: 220px; flex-shrink: 0; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; }
-    .sidebar-logo { padding: 24px 20px; border-bottom: 1px solid var(--border); }
-    .sidebar-logo-text { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--gold); }
-    .sidebar-logo-sub { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; }
-    .sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
-    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--radius-sm); cursor: pointer; color: var(--text2); font-weight: 500; transition: all .15s; text-decoration: none; }
-    .nav-item:hover { background: rgba(255,255,255,.04); color: var(--text); }
-    .nav-item.active { background: rgba(201,168,76,.12); color: var(--gold); }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-    .nav-section-label { font-size: 10px; font-weight: 700; color: var(--text3); letter-spacing: .1em; text-transform: uppercase; padding: 12px 12px 4px; }
-    .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
-    .nav-badge { background: var(--red); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 99px; margin-left: auto; }
+    .sidebar { width:var(--sidebar-w);flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .25s; }
+    .sidebar-logo { padding:22px 20px;border-bottom:1px solid var(--border); }
+    .sidebar-logo-text { font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold); }
+    .sidebar-logo-sub { font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:2px; }
+    .sidebar-nav { flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto; }
+    .nav-label { font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:14px 10px 4px; }
+    .nav-item { display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-weight:500;transition:all .15s;text-decoration:none;font-size:13px; }
+    .nav-item:hover { background:rgba(255,255,255,.04);color:var(--text); }
+    .nav-item.active { background:rgba(201,168,76,.14);color:var(--gold); }
+    .nav-item svg { width:15px;height:15px;flex-shrink:0; }
+    .nav-badge { background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:99px;margin-left:auto;min-width:18px;text-align:center; }
+    .sidebar-footer { padding:14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px; }
+    .sidebar-user { display:flex;align-items:center;gap:10px;padding:8px;border-radius:var(--radius-sm);background:var(--bg3); }
+    .user-avatar { width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#000;flex-shrink:0; }
+    .user-info { flex:1;min-width:0; }
+    .user-name { font-size:12px;font-weight:600;color:var(--text); }
+    .user-role { font-size:10px;color:var(--text3); }
 
     /* ── MAIN ── */
-    .main-content { margin-left: 220px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-    .topbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 28px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-    .topbar-title { font-weight: 700; font-size: 16px; }
-    .topbar-right { display: flex; align-items: center; gap: 16px; }
-    .topbar-admin { font-size: 12px; color: var(--text2); }
-    .btn-logout { background: none; border: 1px solid var(--border2); color: var(--text2); padding: 6px 14px; border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; transition: all .15s; }
-    .btn-logout:hover { border-color: var(--red); color: var(--red); }
-    .page-content { padding: 28px; flex: 1; }
+    .main-content { margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh; }
+    .topbar { background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50; }
+    .topbar-left { display:flex;align-items:center;gap:12px; }
+    .topbar-title { font-weight:700;font-size:16px; }
+    .topbar-right { display:flex;align-items:center;gap:10px; }
+    .btn-topbar { background:none;border:1px solid var(--border2);color:var(--text2);padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;transition:all .15s;display:flex;align-items:center;gap:6px; }
+    .btn-topbar:hover { border-color:var(--gold);color:var(--gold); }
+    .btn-topbar.logout:hover { border-color:var(--red);color:var(--red); }
+    .page-content { padding:24px;flex:1; }
 
-    /* ── STAT CARDS ── */
-    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-    .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-    .stat-card-label { font-size: 11px; color: var(--text3); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
-    .stat-card-value { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 4px; }
-    .stat-card-sub { font-size: 11px; color: var(--text3); }
-    .stat-card.gold { border-top: 2px solid var(--gold); }
-    .stat-card.green { border-top: 2px solid var(--green); }
-    .stat-card.blue  { border-top: 2px solid var(--blue); }
-    .stat-card.red   { border-top: 2px solid var(--red); }
+    /* ── STATS ── */
+    .stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px; }
+    .stat-card { background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden; }
+    .stat-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px; }
+    .stat-card.gold::before { background:var(--gold); }
+    .stat-card.green::before { background:var(--green); }
+    .stat-card.blue::before  { background:var(--blue); }
+    .stat-card.amber::before { background:var(--amber); }
+    .stat-icon { width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:16px; }
+    .stat-icon.gold  { background:rgba(201,168,76,.12);color:var(--gold); }
+    .stat-icon.green { background:rgba(34,197,94,.12); color:var(--green); }
+    .stat-icon.blue  { background:rgba(59,130,246,.12);color:var(--blue); }
+    .stat-icon.amber { background:rgba(245,158,11,.12);color:var(--amber); }
+    .stat-label { font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.06em;text-transform:uppercase; }
+    .stat-value { font-size:30px;font-weight:700;line-height:1;margin:4px 0; }
+    .stat-sub   { font-size:11px;color:var(--text3); }
 
-    /* ── TABLE ── */
-    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 24px; }
-    .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .card-title { font-weight: 700; font-size: 15px; }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    th { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: .08em; text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg3); }
-    td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text2); font-size: 13px; vertical-align: middle; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255,255,255,.02); }
-    .td-name { color: var(--text); font-weight: 600; }
+    /* ── CARDS ── */
+    .card { background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px; }
+    .card-header { padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap; }
+    .card-title  { font-weight:700;font-size:14px; }
+    .table-wrap  { overflow-x:auto; }
+    table { width:100%;border-collapse:collapse; }
+    th { font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);background:var(--bg3);white-space:nowrap; }
+    td { padding:11px 16px;border-bottom:1px solid var(--border);color:var(--text2);font-size:13px;vertical-align:middle; }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:rgba(255,255,255,.015); }
+    .td-primary { color:var(--text);font-weight:600; }
+    .td-mono { font-family:monospace;font-size:11px;color:var(--gold); }
+    .td-sub { font-size:11px;color:var(--text3); }
 
-    /* ── STATUS BADGES ── */
-    .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: capitalize; }
-    .badge-pending   { background: rgba(245,158,11,.12); color: var(--amber); }
-    .badge-confirmed { background: rgba(59,130,246,.12);  color: var(--blue); }
-    .badge-completed { background: rgba(34,197,94,.12);   color: var(--green); }
-    .badge-cancelled { background: rgba(239,68,68,.12);   color: var(--red); }
-    .badge-new       { background: rgba(245,158,11,.12);  color: var(--amber); }
-    .badge-read      { background: rgba(59,130,246,.12);  color: var(--blue); }
-    .badge-replied   { background: rgba(34,197,94,.12);   color: var(--green); }
-    .badge-archived  { background: rgba(100,100,100,.12); color: var(--text3); }
+    /* ── BADGES ── */
+    .badge { display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:capitalize;white-space:nowrap; }
+    .badge-pending   { background:rgba(245,158,11,.12);color:var(--amber); }
+    .badge-confirmed { background:rgba(59,130,246,.12); color:var(--blue); }
+    .badge-completed { background:rgba(34,197,94,.12);  color:var(--green); }
+    .badge-cancelled { background:rgba(239,68,68,.12);  color:var(--red); }
+    .badge-new       { background:rgba(245,158,11,.12); color:var(--amber); }
+    .badge-read      { background:rgba(59,130,246,.12); color:var(--blue); }
+    .badge-replied   { background:rgba(34,197,94,.12);  color:var(--green); }
+    .badge-archived  { background:rgba(100,100,100,.12);color:var(--text3); }
+    .badge-active    { background:rgba(34,197,94,.12);  color:var(--green); }
+    .badge-expired   { background:rgba(239,68,68,.12);  color:var(--red); }
 
     /* ── BUTTONS ── */
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; }
-    .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: white; }
-    .btn-primary:hover { opacity: .9; }
-    .btn-ghost { background: none; border: 1px solid var(--border2); color: var(--text2); }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-    .btn-danger { background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.2); }
-    .btn-danger:hover { background: rgba(239,68,68,.2); }
-    .btn-sm { padding: 5px 10px; font-size: 11px; }
-    .btn-green { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+    .btn { display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;text-decoration:none; }
+    .btn-primary { background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#000; }
+    .btn-primary:hover { opacity:.9; }
+    .btn-ghost   { background:none;border:1px solid var(--border2);color:var(--text2); }
+    .btn-ghost:hover { border-color:var(--gold);color:var(--gold); }
+    .btn-danger  { background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2); }
+    .btn-danger:hover { background:rgba(239,68,68,.2); }
+    .btn-green   { background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2); }
+    .btn-green:hover { background:rgba(34,197,94,.2); }
+    .btn-sm { padding:4px 10px;font-size:11px; }
 
-    /* ── SEARCH / FILTER BAR ── */
-    .filter-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .filter-input { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); color: var(--text); padding: 7px 12px; font-size: 13px; }
-    .filter-input:focus { outline: none; border-color: var(--gold); }
-    .filter-select { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); color: var(--text2); padding: 7px 12px; font-size: 13px; cursor: pointer; }
-
-    /* ── MODAL ── */
-    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-    .modal-bg.open { display: flex; }
-    .modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 32px; width: 520px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
-    .modal h3 { font-size: 18px; margin-bottom: 20px; color: var(--gold); }
-    .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
-    .detail-row { display: flex; gap: 12px; margin-bottom: 12px; }
-    .detail-label { width: 130px; flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; padding-top: 2px; }
-    .detail-value { color: var(--text); font-size: 14px; }
-
-    /* ── TOAST ── */
-    #toast { position: fixed; bottom: 24px; right: 24px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius); padding: 12px 20px; font-size: 13px; color: var(--text); box-shadow: var(--shadow); z-index: 9999; transform: translateY(80px); opacity: 0; transition: all .3s; }
-    #toast.show { transform: translateY(0); opacity: 1; }
-    #toast.success { border-left: 3px solid var(--green); }
-    #toast.error   { border-left: 3px solid var(--red); }
-
-    /* ── EMPTY STATE ── */
-    .empty-state { text-align: center; padding: 60px 20px; color: var(--text3); }
-    .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: .3; }
-    .empty-state p { font-size: 14px; }
+    /* ── FILTERS ── */
+    .filter-bar { display:flex;gap:8px;align-items:center;flex-wrap:wrap; }
+    .filter-input  { background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);padding:7px 12px;font-size:12px;outline:none; }
+    .filter-input:focus { border-color:var(--gold); }
+    .filter-select { background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text2);padding:7px 12px;font-size:12px;cursor:pointer;outline:none; }
+    .filter-select:focus { border-color:var(--gold); }
 
     /* ── PAGINATION ── */
-    .pagination { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); }
-    .page-btn { background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); padding: 5px 12px; border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; }
-    .page-btn:hover, .page-btn.active { border-color: var(--gold); color: var(--gold); }
-    .page-info { font-size: 12px; color: var(--text3); margin-left: auto; }
+    .pagination { display:flex;align-items:center;gap:6px;padding:12px 16px;border-top:1px solid var(--border); }
+    .page-btn { background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:var(--radius-sm);cursor:pointer;font-size:11px; }
+    .page-btn:hover,.page-btn.cur { border-color:var(--gold);color:var(--gold); }
+    .page-btn:disabled { opacity:.4;cursor:not-allowed; }
+    .page-info { font-size:11px;color:var(--text3);margin-left:auto; }
 
-    /* ── REVIEW STARS ── */
-    .stars { color: var(--gold); letter-spacing: 1px; }
-    .section-hidden { display: none; }
+    /* ── MODALS ── */
+    .modal-bg { position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:16px; }
+    .modal-bg.open { display:flex; }
+    .modal { background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:28px;width:540px;max-width:100%;max-height:90vh;overflow-y:auto; }
+    .modal h3 { font-size:17px;margin-bottom:20px;color:var(--gold);font-family:'Playfair Display',serif; }
+    .modal-footer { display:flex;justify-content:flex-end;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid var(--border); }
+    .modal-form-field { margin-bottom:14px; }
+    .modal-form-field label { display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em; }
+    .modal-form-field input,.modal-form-field select,.modal-form-field textarea { width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;transition:border-color .2s; }
+    .modal-form-field input:focus,.modal-form-field select:focus,.modal-form-field textarea:focus { border-color:var(--gold); }
+    .modal-form-field textarea { resize:vertical;min-height:80px; }
+    .detail-row { display:flex;gap:12px;margin-bottom:12px;align-items:flex-start; }
+    .detail-label { width:120px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding-top:3px; }
+    .detail-value { color:var(--text);font-size:13px;flex:1; }
+    .msg-box { padding:14px;background:var(--bg3);border-radius:var(--radius-sm);line-height:1.7;white-space:pre-wrap;font-size:13px;color:var(--text2);margin-top:4px;border-left:3px solid var(--border2); }
+    .action-row { display:flex;gap:8px;flex-wrap:wrap;margin-top:16px; }
 
-    @media (max-width: 768px) { .stats-row { grid-template-columns: 1fr 1fr; } .sidebar { transform: translateX(-100%); } .main-content { margin-left: 0; } }
+    /* ── SECTION TOGGLE ── */
+    .page-section { display:none; }
+    .page-section.active { display:block; }
+
+    /* ── EMPTY STATE ── */
+    .empty { text-align:center;padding:48px 24px;color:var(--text3); }
+    .empty-icon { font-size:40px;margin-bottom:10px;opacity:.4; }
+    .empty p { font-size:13px; }
+
+    /* ── STARS ── */
+    .stars { color:var(--gold);letter-spacing:1px;font-size:13px; }
+
+    /* ── TOAST ── */
+    #toast { position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:12px 20px;font-size:13px;color:var(--text);box-shadow:var(--shadow);z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:340px; }
+    #toast.show { transform:translateY(0);opacity:1; }
+    #toast.success { border-left:3px solid var(--green); }
+    #toast.error   { border-left:3px solid var(--red); }
+    #toast.info    { border-left:3px solid var(--blue); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px) {
+      .stats-grid { grid-template-columns:1fr 1fr; }
+      .sidebar { transform:translateX(-100%); }
+      .sidebar.open { transform:translateX(0); }
+      .main-content { margin-left:0; }
+    }
   </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ══════════════════════════════════════════════ -->
-<div id="login-screen">
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-logo">FW</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen" style="display:flex">
   <div class="login-card">
-    <div class="login-logo">FW</div>
+    <div class="login-logo">FOTO WORLD</div>
     <div class="login-sub">Admin Dashboard</div>
     <div class="login-error" id="login-error"></div>
     <div class="form-field">
@@ -161,139 +213,174 @@
       <label>Password</label>
       <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
     </div>
-    <button class="btn-login" id="login-btn" onclick="doLogin()">Sign In</button>
+    <button class="btn-login" id="login-btn" onclick="doLogin()">Sign In to Dashboard</button>
   </div>
 </div>
 
-<!-- ══ APP ════════════════════════════════════════════════ -->
+<!-- APP -->
 <div id="app">
   <div class="app-layout">
+
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
         <div class="sidebar-logo-text">FOTO WORLD</div>
-        <div class="sidebar-logo-sub">Admin Panel</div>
+        <div class="sidebar-logo-sub">Studio Management</div>
       </div>
       <nav class="sidebar-nav">
-        <div class="nav-section-label">Main</div>
-        <a class="nav-item active" onclick="showPage('dashboard')" href="#">
+        <div class="nav-label">Overview</div>
+        <a class="nav-item active" href="#" onclick="nav('dashboard',this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           Dashboard
         </a>
-        <a class="nav-item" onclick="showPage('bookings')" href="#">
+        <div class="nav-label">Operations</div>
+        <a class="nav-item" href="#" onclick="nav('bookings',this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Bookings
           <span class="nav-badge" id="badge-bookings">0</span>
         </a>
-        <a class="nav-item" onclick="showPage('contacts')" href="#">
+        <a class="nav-item" href="#" onclick="nav('contacts',this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Enquiries
           <span class="nav-badge" id="badge-contacts">0</span>
         </a>
-        <div class="nav-section-label">Gallery & Content</div>
-        <a class="nav-item" onclick="showPage('galleries')" href="#">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <div class="nav-label">Content</div>
+        <a class="nav-item" href="#" onclick="nav('galleries',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Galleries
         </a>
-        <a class="nav-item" onclick="showPage('reviews')" href="#">
+        <a class="nav-item" href="#" onclick="nav('reviews',this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           Reviews
         </a>
-        <a class="nav-item" onclick="showPage('newsletter')" href="#">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+        <a class="nav-item" href="#" onclick="nav('newsletter',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6z"/><polyline points="22,6 12,13 2,6"/></svg>
           Newsletter
         </a>
       </nav>
       <div class="sidebar-footer">
-        <a href="/" target="_blank" style="color:var(--text3);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:6px">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="user-avatar">A</div>
+          <div class="user-info">
+            <div class="user-name" id="sidebar-username">Admin</div>
+            <div class="user-role">Administrator</div>
+          </div>
+        </div>
+        <a href="/" target="_blank" class="btn btn-ghost btn-sm" style="justify-content:center">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           View Website
         </a>
       </div>
     </aside>
 
-    <!-- MAIN -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
       <div class="topbar">
-        <div class="topbar-title" id="page-title">Dashboard</div>
+        <div class="topbar-left">
+          <div class="topbar-title" id="page-title">Dashboard</div>
+        </div>
         <div class="topbar-right">
-          <span class="topbar-admin" id="admin-name">admin</span>
-          <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+          <button class="btn-topbar" onclick="refreshCurrent()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Refresh
+          </button>
+          <button class="btn-topbar logout" onclick="doLogout()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
         </div>
       </div>
 
       <div class="page-content">
 
-        <!-- ── DASHBOARD ── -->
-        <section id="page-dashboard">
-          <div class="stats-row" id="dash-stats">
-            <div class="stat-card gold"><div class="stat-card-label">Total Bookings</div><div class="stat-card-value" id="stat-total">—</div><div class="stat-card-sub">All time</div></div>
-            <div class="stat-card amber"><div class="stat-card-label">Pending</div><div class="stat-card-value" id="stat-pending" style="color:var(--amber)">—</div><div class="stat-card-sub">Awaiting confirmation</div></div>
-            <div class="stat-card green"><div class="stat-card-label">New Enquiries</div><div class="stat-card-value" id="stat-enquiries" style="color:var(--green)">—</div><div class="stat-card-sub">Unread messages</div></div>
-            <div class="stat-card blue"><div class="stat-card-label">Subscribers</div><div class="stat-card-value" id="stat-subscribers" style="color:var(--blue)">—</div><div class="stat-card-sub">Newsletter list</div></div>
+        <!-- ══ DASHBOARD ══ -->
+        <section class="page-section active" id="sec-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card gold">
+              <div class="stat-icon gold">📅</div>
+              <div class="stat-label">Total Bookings</div>
+              <div class="stat-value" id="s-bookings">—</div>
+              <div class="stat-sub">All time</div>
+            </div>
+            <div class="stat-card amber">
+              <div class="stat-icon amber">⏳</div>
+              <div class="stat-label">Pending</div>
+              <div class="stat-value" id="s-pending" style="color:var(--amber)">—</div>
+              <div class="stat-sub">Awaiting confirmation</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-icon green">💬</div>
+              <div class="stat-label">New Enquiries</div>
+              <div class="stat-value" id="s-enquiries" style="color:var(--green)">—</div>
+              <div class="stat-sub">Unread messages</div>
+            </div>
+            <div class="stat-card blue">
+              <div class="stat-icon blue">📧</div>
+              <div class="stat-label">Subscribers</div>
+              <div class="stat-value" id="s-subscribers" style="color:var(--blue)">—</div>
+              <div class="stat-sub">Newsletter list</div>
+            </div>
           </div>
-
           <div class="card">
             <div class="card-header">
               <span class="card-title">Recent Bookings</span>
-              <button class="btn btn-ghost btn-sm" onclick="showPage('bookings')">View All →</button>
+              <button class="btn btn-ghost btn-sm" onclick="nav('bookings')">View All →</button>
             </div>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Ref</th><th>Client</th><th>Service</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
-                <tbody id="dash-recent-bookings"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:24px">Loading...</td></tr></tbody>
+                <tbody id="dash-bookings"><tr><td colspan="6" class="empty"><div class="empty-icon">⏳</div><p>Loading…</p></td></tr></tbody>
               </table>
             </div>
           </div>
-
           <div class="card">
             <div class="card-header">
               <span class="card-title">Recent Enquiries</span>
-              <button class="btn btn-ghost btn-sm" onclick="showPage('contacts')">View All →</button>
+              <button class="btn btn-ghost btn-sm" onclick="nav('contacts')">View All →</button>
             </div>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Name</th><th>Email</th><th>Service</th><th>Status</th><th>Date</th></tr></thead>
-                <tbody id="dash-recent-contacts"><tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px">Loading...</td></tr></tbody>
+                <thead><tr><th>Name</th><th>Email</th><th>Service</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+                <tbody id="dash-contacts"><tr><td colspan="6" class="empty"><div class="empty-icon">⏳</div><p>Loading…</p></td></tr></tbody>
               </table>
             </div>
           </div>
         </section>
 
-        <!-- ── BOOKINGS ── -->
-        <section id="page-bookings" class="section-hidden">
+        <!-- ══ BOOKINGS ══ -->
+        <section class="page-section" id="sec-bookings">
           <div class="card">
             <div class="card-header">
               <span class="card-title">All Bookings</span>
               <div class="filter-bar">
-                <input class="filter-input" id="booking-search" placeholder="Search name, email, ref…" oninput="loadBookings()" style="width:200px" />
-                <select class="filter-select" id="booking-status-filter" onchange="loadBookings()">
+                <input class="filter-input" id="bk-search" placeholder="Search name, ref, email…" oninput="bPage=1;loadBookings()" style="width:180px" />
+                <select class="filter-select" id="bk-status" onchange="bPage=1;loadBookings()">
                   <option value="">All Status</option>
                   <option value="pending">Pending</option>
                   <option value="confirmed">Confirmed</option>
                   <option value="completed">Completed</option>
                   <option value="cancelled">Cancelled</option>
                 </select>
-                <input type="date" class="filter-input" id="booking-date-filter" onchange="loadBookings()" />
+                <input type="date" class="filter-input" id="bk-date" onchange="bPage=1;loadBookings()" />
               </div>
             </div>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Ref</th><th>Client</th><th>Service</th><th>Date & Time</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
-                <tbody id="bookings-table-body"></tbody>
+                <tbody id="bk-tbody"></tbody>
               </table>
             </div>
-            <div class="pagination" id="bookings-pagination"></div>
+            <div class="pagination" id="bk-pag"></div>
           </div>
         </section>
 
-        <!-- ── CONTACTS ── -->
-        <section id="page-contacts" class="section-hidden">
+        <!-- ══ CONTACTS ══ -->
+        <section class="page-section" id="sec-contacts">
           <div class="card">
             <div class="card-header">
               <span class="card-title">Enquiries</span>
               <div class="filter-bar">
-                <select class="filter-select" id="contact-status-filter" onchange="loadContacts()">
+                <select class="filter-select" id="ct-status" onchange="loadContacts()">
                   <option value="">All</option>
                   <option value="new">New</option>
                   <option value="read">Read</option>
@@ -305,52 +392,61 @@
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Service</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
-                <tbody id="contacts-table-body"></tbody>
+                <tbody id="ct-tbody"></tbody>
               </table>
             </div>
           </div>
         </section>
 
-        <!-- ── GALLERIES ── -->
-        <section id="page-galleries" class="section-hidden">
-          <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-            <button class="btn btn-primary" onclick="openCreateGallery()">+ New Gallery</button>
+        <!-- ══ GALLERIES ══ -->
+        <section class="page-section" id="sec-galleries">
+          <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+            <button class="btn btn-primary" onclick="openModal('modal-new-gallery')">+ New Gallery</button>
           </div>
           <div class="card">
             <div class="card-header"><span class="card-title">Client Galleries</span></div>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Code</th><th>Client</th><th>Session</th><th>Date</th><th>Photos</th><th>Expires</th><th>Actions</th></tr></thead>
-                <tbody id="galleries-table-body"></tbody>
+                <thead><tr><th>Code</th><th>Client</th><th>Session</th><th>Date</th><th>Photos</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="gl-tbody"></tbody>
               </table>
             </div>
           </div>
         </section>
 
-        <!-- ── REVIEWS ── -->
-        <section id="page-reviews" class="section-hidden">
+        <!-- ══ REVIEWS ══ -->
+        <section class="page-section" id="sec-reviews">
           <div class="card">
-            <div class="card-header"><span class="card-title">Customer Reviews</span></div>
+            <div class="card-header">
+              <span class="card-title">Customer Reviews</span>
+              <div class="filter-bar">
+                <select class="filter-select" id="rv-filter" onchange="loadReviews()">
+                  <option value="all">All Reviews</option>
+                  <option value="pending">Pending Approval</option>
+                  <option value="approved">Approved (Live)</option>
+                </select>
+              </div>
+            </div>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Name</th><th>Service</th><th>Rating</th><th>Review</th><th>Verified</th><th>Approved</th><th>Actions</th></tr></thead>
-                <tbody id="reviews-table-body"></tbody>
+                <thead><tr><th>Name</th><th>Service</th><th>Rating</th><th>Review</th><th>Verified</th><th>Live</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody id="rv-tbody"></tbody>
               </table>
             </div>
           </div>
         </section>
 
-        <!-- ── NEWSLETTER ── -->
-        <section id="page-newsletter" class="section-hidden">
+        <!-- ══ NEWSLETTER ══ -->
+        <section class="page-section" id="sec-newsletter">
           <div class="card">
             <div class="card-header">
               <span class="card-title">Newsletter Subscribers</span>
-              <span id="subscriber-count" style="font-size:12px;color:var(--text3)">Loading…</span>
+              <span id="nl-count" style="font-size:12px;color:var(--text3)">Loading…</span>
             </div>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>#</th><th>Email</th><th>Subscribed On</th><th>Actions</th></tr></thead>
-                <tbody id="newsletter-table-body"></tbody>
+                <tbody id="nl-tbody"></tbody>
               </table>
             </div>
           </div>
@@ -361,12 +457,13 @@
   </div><!-- /app-layout -->
 </div><!-- /app -->
 
-<!-- ── MODALS ── -->
+<!-- ══ MODALS ══ -->
+
 <!-- Booking Detail -->
 <div class="modal-bg" id="modal-booking">
   <div class="modal">
     <h3>Booking Details</h3>
-    <div id="modal-booking-content"></div>
+    <div id="modal-booking-body"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-booking')">Close</button>
     </div>
@@ -377,26 +474,54 @@
 <div class="modal-bg" id="modal-contact">
   <div class="modal">
     <h3>Enquiry Details</h3>
-    <div id="modal-contact-content"></div>
+    <div id="modal-contact-body"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-contact')">Close</button>
     </div>
   </div>
 </div>
 
-<!-- Create Gallery -->
-<div class="modal-bg" id="modal-create-gallery">
+<!-- New Gallery -->
+<div class="modal-bg" id="modal-new-gallery">
   <div class="modal">
-    <h3>Create New Gallery</h3>
-    <div class="form-field"><label>Gallery Code (e.g. PRIYA2025)</label><input id="gc-code" placeholder="PRIYA2025" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px" /></div>
-    <div class="form-field"><label>Client Password</label><input type="text" id="gc-password" placeholder="e.g. photo2025" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px" /></div>
-    <div class="form-field"><label>Client Name</label><input id="gc-client" placeholder="Priya & Karthik" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px" /></div>
-    <div class="form-field"><label>Session Name</label><input id="gc-session" placeholder="Wedding Ceremony" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px" /></div>
-    <div class="form-field"><label>Session Date</label><input type="date" id="gc-date" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px" /></div>
-    <div class="form-field"><label>Expires On (optional)</label><input type="date" id="gc-expires" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px" /></div>
+    <h3>Create Client Gallery</h3>
+    <div class="modal-form-field"><label>Gallery Code</label><input id="gc-code" placeholder="PRIYA2025" maxlength="20" /></div>
+    <div class="modal-form-field"><label>Client Password</label><input type="text" id="gc-pass" placeholder="e.g. wedding2025" /></div>
+    <div class="modal-form-field"><label>Client Name</label><input id="gc-client" placeholder="Priya & Karthik" /></div>
+    <div class="modal-form-field"><label>Session Name</label><input id="gc-session" placeholder="Wedding Ceremony" /></div>
+    <div class="modal-form-field"><label>Session Date</label><input type="date" id="gc-date" /></div>
+    <div class="modal-form-field"><label>Expires On (optional)</label><input type="date" id="gc-expires" /></div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-create-gallery')">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-new-gallery')">Cancel</button>
       <button class="btn btn-primary" onclick="createGallery()">Create Gallery</button>
+    </div>
+  </div>
+</div>
+
+<!-- Update Booking Status -->
+<div class="modal-bg" id="modal-update-booking">
+  <div class="modal">
+    <h3>Update Booking</h3>
+    <div class="modal-form-field">
+      <label>Status</label>
+      <select id="ub-status" class="filter-select" style="width:100%">
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="modal-form-field">
+      <label>Amount (₹)</label>
+      <input type="number" id="ub-amount" placeholder="0" min="0" />
+    </div>
+    <div class="modal-form-field">
+      <label>Admin Notes</label>
+      <textarea id="ub-notes" placeholder="Internal notes…"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-update-booking')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitUpdateBooking()">Save Changes</button>
     </div>
   </div>
 </div>
@@ -404,379 +529,503 @@
 <div id="toast"></div>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   FOTO WORLD Admin Dashboard — Client Script
-══════════════════════════════════════════════════════ */
-const API = '';
-let TOKEN = localStorage.getItem('fw_admin_token');
-let currentPage = 'dashboard';
+/* ══════════════════════════════════════════════════════════
+   FOTO WORLD Admin — Cookie-Based Auth (no localStorage)
+   All API calls use credentials:'include' so the httpOnly
+   fw_admin_session cookie is sent automatically.
+   No token is ever stored or read by JavaScript.
+══════════════════════════════════════════════════════════ */
+'use strict';
 
-// ── AUTH ──────────────────────────────────────────────
+let currentSection = 'dashboard';
+let _editBookingId = null;
+let bPage = 1;
+
+/* ── Utility: safe HTML escape ──────────────────────────── */
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* ── Toast ──────────────────────────────────────────────── */
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.className = '', 4000);
+}
+
+/* ── API helper — always sends cookies ──────────────────── */
+async function api(path, opts = {}) {
+  const res = await fetch(path, {
+    ...opts,
+    credentials: 'include',                // send httpOnly session cookie
+    headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
+  });
+  if (res.status === 401) { showLogin(); return null; }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+  return data;
+}
+
+/* ── Auth: Login ────────────────────────────────────────── */
 async function doLogin() {
-  const username = document.getElementById('login-username').value;
+  const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value;
   const errEl = document.getElementById('login-error');
-  const btn = document.getElementById('login-btn');
-  btn.textContent = 'Signing in…'; btn.disabled = true;
+  const btn   = document.getElementById('login-btn');
+
+  if (!username || !password) { errEl.textContent = 'Please enter username and password.'; errEl.style.display = 'block'; return; }
+
+  btn.textContent = 'Signing in…'; btn.disabled = true; errEl.style.display = 'none';
+
   try {
-    const r = await fetch('/api/auth/admin-login', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ username, password })
+    const d = await fetch('/api/auth/admin-login', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
     });
-    const d = await r.json();
-    if (!r.ok) throw new Error(d.error || 'Login failed');
-    TOKEN = d.token;
-    localStorage.setItem('fw_admin_token', TOKEN);
-    document.getElementById('admin-name').textContent = d.admin.username;
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    errEl.style.display = 'none';
+    const body = await d.json();
+    if (!d.ok) throw new Error(body.error || 'Login failed');
+
+    setAdminName(body.admin.username);
+    showApp();
     initDashboard();
-  } catch(e) {
-    errEl.textContent = e.message; errEl.style.display = 'block';
-  } finally { btn.textContent = 'Sign In'; btn.disabled = false; }
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Sign In to Dashboard';
+    btn.disabled = false;
+  }
 }
 
-document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+/* ── Auth: Logout ───────────────────────────────────────── */
+async function doLogout() {
+  try {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+  } catch (_) {}
+  showLogin();
+}
 
-function doLogout() {
-  TOKEN = null; localStorage.removeItem('fw_admin_token');
+/* ── Auth: Auto-restore session on page load ────────────── */
+async function tryRestoreSession() {
+  try {
+    const d = await fetch('/api/auth/me', { credentials: 'include' });
+    if (!d.ok) { showLogin(); return; }
+    const body = await d.json();
+    setAdminName(body.admin.username);
+    showApp();
+    initDashboard();
+  } catch (_) {
+    showLogin();
+  }
+}
+
+function setAdminName(name) {
+  document.getElementById('sidebar-username').textContent = name;
+  document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
+}
+
+function showLogin() {
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('page-loader').style.display = 'none';
 }
 
-// Auto-login if token exists
-if (TOKEN) {
-  fetch('/api/auth/me', { headers: { Authorization: 'Bearer ' + TOKEN } })
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(d => {
-      document.getElementById('admin-name').textContent = d.admin.username;
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      initDashboard();
-    })
-    .catch(() => { TOKEN = null; localStorage.removeItem('fw_admin_token'); });
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('page-loader').style.display = 'none';
 }
 
-// ── API HELPER ──────────────────────────────────────
-async function api(path, opts = {}) {
-  const r = await fetch(API + path, {
-    ...opts,
-    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + TOKEN, ...(opts.headers || {}) }
-  });
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.error || 'Request failed');
-  return d;
+/* ── Navigation ─────────────────────────────────────────── */
+const PAGE_LABELS = { dashboard:'Dashboard', bookings:'Bookings', contacts:'Enquiries', galleries:'Galleries', reviews:'Reviews', newsletter:'Newsletter' };
+
+function nav(page, el) {
+  if (el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  }
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + page).classList.add('active');
+  document.getElementById('page-title').textContent = PAGE_LABELS[page] || page;
+  currentSection = page;
+
+  if (page === 'bookings')   loadBookings();
+  if (page === 'contacts')   loadContacts();
+  if (page === 'galleries')  loadGalleries();
+  if (page === 'reviews')    loadReviews();
+  if (page === 'newsletter') loadNewsletter();
 }
 
-// ── NAV ──────────────────────────────────────────────
-function showPage(name) {
-  document.querySelectorAll('.sidebar .nav-item').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('[id^="page-"]').forEach(el => el.classList.add('section-hidden'));
-  document.getElementById('page-' + name).classList.remove('section-hidden');
-  event.currentTarget && event.currentTarget.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(el => { if(el.getAttribute('onclick') && el.getAttribute('onclick').includes("'"+name+"'")) el.classList.add('active'); });
-  document.getElementById('page-title').textContent = { dashboard:'Dashboard', bookings:'Bookings', contacts:'Enquiries', galleries:'Galleries', reviews:'Reviews', newsletter:'Newsletter' }[name] || name;
-  currentPage = name;
-  if (name === 'bookings')   loadBookings();
-  if (name === 'contacts')   loadContacts();
-  if (name === 'galleries')  loadGalleries();
-  if (name === 'reviews')    loadReviews();
-  if (name === 'newsletter') loadNewsletter();
-}
+function refreshCurrent() { nav(currentSection); }
 
-// ── DASHBOARD ─────────────────────────────────────
+/* ── Modal helpers ──────────────────────────────────────── */
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-bg').forEach(m =>
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); })
+);
+
+/* ══ DASHBOARD ═══════════════════════════════════════════ */
 async function initDashboard() {
   try {
-    const [bkng, contacts, subs] = await Promise.all([
+    const [bk, ct, nl] = await Promise.all([
       api('/api/bookings?limit=5'),
       api('/api/contact?limit=5'),
       api('/api/newsletter?limit=1'),
     ]);
-    document.getElementById('stat-total').textContent   = bkng.total;
-    document.getElementById('stat-pending').textContent = bkng.bookings.filter(b=>b.status==='pending').length;
-    document.getElementById('stat-enquiries').textContent = contacts.bookings ? 0 : contacts.contacts.filter(c=>c.status==='new').length;
-    document.getElementById('stat-subscribers').textContent = subs.total;
+    if (!bk || !ct) return;
 
-    // Update badges
-    const pendingCount = (await api('/api/bookings?status=pending&limit=1')).total;
-    document.getElementById('badge-bookings').textContent = pendingCount;
-    const newContacts = (await api('/api/contact?status=new&limit=1')).total;
-    document.getElementById('badge-contacts').textContent = newContacts;
+    // Stats
+    document.getElementById('s-bookings').textContent    = bk.total;
+    document.getElementById('s-pending').textContent     = bk.bookings.filter(b => b.status === 'pending').length;
+    document.getElementById('s-enquiries').textContent   = ct.contacts.filter(c => c.status === 'new').length;
+    document.getElementById('s-subscribers').textContent = nl?.total ?? '—';
 
-    // Recent bookings table
-    document.getElementById('dash-recent-bookings').innerHTML = bkng.bookings.length === 0
-      ? '<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:24px">No bookings yet</td></tr>'
-      : bkng.bookings.map(b => `
+    // Badges
+    const [pb, nc] = await Promise.all([
+      api('/api/bookings?status=pending&limit=1'),
+      api('/api/contact?status=new&limit=1'),
+    ]);
+    document.getElementById('badge-bookings').textContent = pb?.total ?? 0;
+    document.getElementById('badge-contacts').textContent = nc?.total ?? 0;
+
+    // Recent bookings
+    document.getElementById('dash-bookings').innerHTML = bk.bookings.length
+      ? bk.bookings.map(b => `
         <tr>
-          <td style="font-family:monospace;font-size:12px">${b.ref_code}</td>
-          <td class="td-name">${esc(b.name)}</td>
+          <td class="td-mono">${esc(b.ref_code)}</td>
+          <td class="td-primary">${esc(b.name)}</td>
           <td>${esc(b.service)}</td>
-          <td>${b.date} ${b.time_slot}</td>
+          <td>${esc(b.date)} <span class="td-sub">${esc(b.time_slot)}</span></td>
           <td><span class="badge badge-${b.status}">${b.status}</span></td>
           <td><button class="btn btn-ghost btn-sm" onclick="viewBooking(${b.id})">View</button></td>
-        </tr>`).join('');
+        </tr>`).join('')
+      : `<tr><td colspan="6"><div class="empty"><div class="empty-icon">📅</div><p>No bookings yet</p></div></td></tr>`;
 
     // Recent contacts
-    document.getElementById('dash-recent-contacts').innerHTML = contacts.contacts.length === 0
-      ? '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px">No enquiries yet</td></tr>'
-      : contacts.contacts.map(c => `
+    document.getElementById('dash-contacts').innerHTML = ct.contacts.length
+      ? ct.contacts.map(c => `
         <tr>
-          <td class="td-name">${esc(c.name)}</td>
+          <td class="td-primary">${esc(c.name)}</td>
           <td>${esc(c.email)}</td>
-          <td>${esc(c.service||'—')}</td>
+          <td>${esc(c.service || '—')}</td>
           <td><span class="badge badge-${c.status}">${c.status}</span></td>
-          <td style="font-size:12px;color:var(--text3)">${c.created_at.slice(0,10)}</td>
-        </tr>`).join('');
-  } catch(e) { console.error(e); }
+          <td class="td-sub">${esc(c.created_at?.slice(0,10) ?? '')}</td>
+          <td><button class="btn btn-ghost btn-sm" onclick="viewContact(${c.id})">View</button></td>
+        </tr>`).join('')
+      : `<tr><td colspan="6"><div class="empty"><div class="empty-icon">💬</div><p>No enquiries yet</p></div></td></tr>`;
+
+  } catch (e) { console.error('Dashboard error:', e.message); }
 }
 
-// ── BOOKINGS ──────────────────────────────────────
-let bPage = 1;
+/* ══ BOOKINGS ════════════════════════════════════════════ */
 async function loadBookings() {
-  const search = document.getElementById('booking-search').value;
-  const status = document.getElementById('booking-status-filter').value;
-  const date   = document.getElementById('booking-date-filter').value;
+  const search = document.getElementById('bk-search').value;
+  const status = document.getElementById('bk-status').value;
+  const date   = document.getElementById('bk-date').value;
   try {
     const d = await api(`/api/bookings?page=${bPage}&limit=15&search=${encodeURIComponent(search)}&status=${status}&date=${date}`);
-    const tbody = document.getElementById('bookings-table-body');
-    tbody.innerHTML = d.bookings.length === 0
-      ? `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:32px">No bookings found</td></tr>`
-      : d.bookings.map(b => `
+    if (!d) return;
+
+    document.getElementById('bk-tbody').innerHTML = d.bookings.length
+      ? d.bookings.map(b => `
         <tr>
-          <td style="font-family:monospace;font-size:11px;color:var(--gold)">${b.ref_code}</td>
-          <td><div class="td-name">${esc(b.name)}</div><div style="font-size:11px;color:var(--text3)">${esc(b.email)}</div></td>
+          <td class="td-mono">${esc(b.ref_code)}</td>
+          <td>
+            <div class="td-primary">${esc(b.name)}</div>
+            <div class="td-sub">${esc(b.email)}</div>
+          </td>
           <td>${esc(b.service)}</td>
-          <td><div>${b.date}</div><div style="font-size:11px;color:var(--text3)">${b.time_slot}</div></td>
-          <td style="color:var(--gold)">₹${(b.amount||0).toLocaleString()}</td>
+          <td>
+            <div>${esc(b.date)}</div>
+            <div class="td-sub">${esc(b.time_slot)}</div>
+          </td>
+          <td style="color:var(--gold)">₹${(b.amount||0).toLocaleString('en-IN')}</td>
           <td><span class="badge badge-${b.status}">${b.status}</span></td>
           <td style="display:flex;gap:6px;flex-wrap:wrap">
             <button class="btn btn-ghost btn-sm" onclick="viewBooking(${b.id})">View</button>
-            <select class="filter-select" style="font-size:11px;padding:4px 8px" onchange="updateBookingStatus(${b.id},this.value)">
-              <option value="">Change…</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
+            <button class="btn btn-primary btn-sm" onclick="editBooking(${b.id},'${esc(b.status)}',${b.amount||0},'${esc(b.notes||'')}')">Edit</button>
+            <a href="https://wa.me/${b.phone?.replace(/\D/g,'')}" target="_blank" class="btn btn-green btn-sm">WA</a>
           </td>
-        </tr>`).join('');
+        </tr>`).join('')
+      : `<tr><td colspan="7"><div class="empty"><div class="empty-icon">📅</div><p>No bookings found</p></div></td></tr>`;
 
-    // Pagination
-    const totalPages = Math.ceil(d.total / 15);
-    document.getElementById('bookings-pagination').innerHTML =
+    const total = d.total, pages = Math.max(1, Math.ceil(total / 15));
+    document.getElementById('bk-pag').innerHTML =
       `<button class="page-btn" onclick="bPage=Math.max(1,bPage-1);loadBookings()" ${bPage===1?'disabled':''}>← Prev</button>` +
-      `<span class="page-info">Page ${bPage} of ${totalPages} · ${d.total} bookings</span>` +
-      `<button class="page-btn" onclick="bPage=Math.min(${totalPages},bPage+1);loadBookings()" ${bPage===totalPages?'disabled':''}>Next →</button>`;
-  } catch(e) { toast(e.message, 'error'); }
+      `<span class="page-info">Page ${bPage} / ${pages} · ${total} total</span>` +
+      `<button class="page-btn" onclick="bPage=Math.min(${pages},bPage+1);loadBookings()" ${bPage>=pages?'disabled':''}>Next →</button>`;
+  } catch (e) { toast(e.message, 'error'); }
 }
 
 async function viewBooking(id) {
   try {
-    const { booking: b } = await api('/api/bookings/' + id);
-    document.getElementById('modal-booking-content').innerHTML = `
-      <div class="detail-row"><div class="detail-label">Ref Code</div><div class="detail-value" style="font-family:monospace;color:var(--gold)">${b.ref_code}</div></div>
+    const d = await api('/api/bookings/' + id);
+    if (!d) return;
+    const b = d.booking;
+    document.getElementById('modal-booking-body').innerHTML = `
+      <div class="detail-row"><div class="detail-label">Ref Code</div><div class="detail-value td-mono">${esc(b.ref_code)}</div></div>
       <div class="detail-row"><div class="detail-label">Service</div><div class="detail-value">${esc(b.service)}</div></div>
-      <div class="detail-row"><div class="detail-label">Date & Time</div><div class="detail-value">${b.date} at ${b.time_slot}</div></div>
-      <div class="detail-row"><div class="detail-label">Client Name</div><div class="detail-value td-name">${esc(b.name)}</div></div>
-      <div class="detail-row"><div class="detail-label">Phone</div><div class="detail-value"><a href="tel:${b.phone}" style="color:var(--gold)">${esc(b.phone)}</a></div></div>
-      <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:${b.email}" style="color:var(--gold)">${esc(b.email)}</a></div></div>
+      <div class="detail-row"><div class="detail-label">Date & Time</div><div class="detail-value">${esc(b.date)} at ${esc(b.time_slot)}</div></div>
+      <div class="detail-row"><div class="detail-label">Client</div><div class="detail-value td-primary">${esc(b.name)}</div></div>
+      <div class="detail-row"><div class="detail-label">Phone</div><div class="detail-value"><a href="tel:${esc(b.phone)}" style="color:var(--gold)">${esc(b.phone)}</a></div></div>
+      <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:${esc(b.email)}" style="color:var(--gold)">${esc(b.email)}</a></div></div>
       <div class="detail-row"><div class="detail-label">Occasion</div><div class="detail-value">${esc(b.occasion||'—')}</div></div>
       <div class="detail-row"><div class="detail-label">Notes</div><div class="detail-value" style="white-space:pre-wrap">${esc(b.notes||'—')}</div></div>
-      <div class="detail-row"><div class="detail-label">Amount</div><div class="detail-value" style="color:var(--gold);font-weight:700">₹${(b.amount||0).toLocaleString()}</div></div>
+      <div class="detail-row"><div class="detail-label">Amount</div><div class="detail-value" style="color:var(--gold);font-weight:700">₹${(b.amount||0).toLocaleString('en-IN')}</div></div>
       <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value"><span class="badge badge-${b.status}">${b.status}</span></div></div>
-      <div class="detail-row"><div class="detail-label">Booked On</div><div class="detail-value">${b.created_at}</div></div>
-      <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-        <a href="https://wa.me/${b.phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
-        <a href="mailto:${b.email}" class="btn btn-ghost btn-sm">📧 Email</a>
+      <div class="detail-row"><div class="detail-label">Booked On</div><div class="detail-value td-sub">${esc(b.created_at)}</div></div>
+      <div class="action-row">
+        <a href="https://wa.me/${(b.phone||'').replace(/\D/g,'')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
+        <a href="mailto:${esc(b.email)}" class="btn btn-ghost btn-sm">📧 Email</a>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('modal-booking');editBooking(${b.id},'${esc(b.status)}',${b.amount||0},'${esc(b.notes||'')}')">✏️ Edit</button>
       </div>`;
-    document.getElementById('modal-booking').classList.add('open');
-  } catch(e) { toast(e.message,'error'); }
+    openModal('modal-booking');
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-async function updateBookingStatus(id, status) {
-  if (!status) return;
+function editBooking(id, status, amount, notes) {
+  _editBookingId = id;
+  document.getElementById('ub-status').value = status;
+  document.getElementById('ub-amount').value = amount;
+  document.getElementById('ub-notes').value  = notes;
+  openModal('modal-update-booking');
+}
+
+async function submitUpdateBooking() {
+  if (!_editBookingId) return;
   try {
-    await api('/api/bookings/' + id, { method:'PATCH', body: JSON.stringify({ status }) });
-    toast('Status updated to ' + status, 'success');
+    await api('/api/bookings/' + _editBookingId, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        status: document.getElementById('ub-status').value,
+        amount: parseFloat(document.getElementById('ub-amount').value) || 0,
+        notes:  document.getElementById('ub-notes').value,
+      }),
+    });
+    toast('Booking updated!', 'success');
+    closeModal('modal-update-booking');
     loadBookings();
-  } catch(e) { toast(e.message,'error'); }
+    initDashboard();
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-// ── CONTACTS ──────────────────────────────────────
+/* ══ CONTACTS ════════════════════════════════════════════ */
 async function loadContacts() {
-  const status = document.getElementById('contact-status-filter').value;
+  const status = document.getElementById('ct-status').value;
   try {
-    const d = await api(`/api/contact?status=${status}&limit=50`);
-    document.getElementById('contacts-table-body').innerHTML = d.contacts.length === 0
-      ? `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:32px">No enquiries found</td></tr>`
-      : d.contacts.map(c => `
+    const d = await api(`/api/contact?status=${status}&limit=100`);
+    if (!d) return;
+    document.getElementById('ct-tbody').innerHTML = d.contacts.length
+      ? d.contacts.map(c => `
         <tr>
-          <td class="td-name">${esc(c.name)}</td>
-          <td><a href="mailto:${c.email}" style="color:var(--gold)">${esc(c.email)}</a></td>
+          <td class="td-primary">${esc(c.name)}</td>
+          <td><a href="mailto:${esc(c.email)}" style="color:var(--gold)">${esc(c.email)}</a></td>
           <td>${esc(c.phone||'—')}</td>
           <td>${esc(c.service||'—')}</td>
           <td><span class="badge badge-${c.status}">${c.status}</span></td>
-          <td style="font-size:12px;color:var(--text3)">${c.created_at.slice(0,10)}</td>
+          <td class="td-sub">${esc(c.created_at?.slice(0,10)??'')}</td>
           <td style="display:flex;gap:6px">
-            <button class="btn btn-ghost btn-sm" onclick="viewContact(${JSON.stringify(c).split('"').join('&quot;')})">View</button>
-            <select class="filter-select" style="font-size:11px;padding:4px 8px" onchange="updateContactStatus(${c.id},this.value)">
-              <option value="">Change…</option>
-              <option value="new">New</option>
-              <option value="read">Read</option>
-              <option value="replied">Replied</option>
-              <option value="archived">Archived</option>
-            </select>
+            <button class="btn btn-ghost btn-sm" onclick="viewContact(${c.id})">View</button>
+            ${c.phone ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}" target="_blank" class="btn btn-green btn-sm">WA</a>` : ''}
           </td>
-        </tr>`).join('');
-  } catch(e) { toast(e.message,'error'); }
+        </tr>`).join('')
+      : `<tr><td colspan="7"><div class="empty"><div class="empty-icon">💬</div><p>No enquiries found</p></div></td></tr>`;
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-function viewContact(c) {
-  document.getElementById('modal-contact-content').innerHTML = `
-    <div class="detail-row"><div class="detail-label">Name</div><div class="detail-value td-name">${esc(c.name)}</div></div>
-    <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:${c.email}" style="color:var(--gold)">${esc(c.email)}</a></div></div>
-    <div class="detail-row"><div class="detail-label">Phone</div><div class="detail-value"><a href="tel:${c.phone}" style="color:var(--gold)">${esc(c.phone||'—')}</a></div></div>
-    <div class="detail-row"><div class="detail-label">Service</div><div class="detail-value">${esc(c.service||'—')}</div></div>
-    <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value"><span class="badge badge-${c.status}">${c.status}</span></div></div>
-    <div class="detail-row"><div class="detail-label">Date</div><div class="detail-value">${c.created_at}</div></div>
-    <div style="margin-top:12px;padding:16px;background:var(--bg3);border-radius:8px;line-height:1.7;white-space:pre-wrap;font-size:13px;color:var(--text2)">${esc(c.message)}</div>
-    <div style="margin-top:16px;display:flex;gap:8px">
-      <a href="mailto:${c.email}?subject=Re: Your enquiry at FOTO WORLD" class="btn btn-primary btn-sm">📧 Reply via Email</a>
-      ${c.phone ? `<a href="https://wa.me/${c.phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>` : ''}
-    </div>`;
-  document.getElementById('modal-contact').classList.add('open');
-  if (c.status === 'new') updateContactStatus(c.id, 'read');
+// Store contacts by id for modal
+const _contacts = {};
+async function viewContact(id) {
+  try {
+    // Fetch all and find by id (no dedicated endpoint, use list)
+    const d = await api(`/api/contact?limit=200`);
+    if (!d) return;
+    const c = d.contacts.find(x => x.id === id);
+    if (!c) { toast('Contact not found', 'error'); return; }
+
+    document.getElementById('modal-contact-body').innerHTML = `
+      <div class="detail-row"><div class="detail-label">Name</div><div class="detail-value td-primary">${esc(c.name)}</div></div>
+      <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:${esc(c.email)}" style="color:var(--gold)">${esc(c.email)}</a></div></div>
+      <div class="detail-row"><div class="detail-label">Phone</div><div class="detail-value"><a href="tel:${esc(c.phone)}" style="color:var(--gold)">${esc(c.phone||'—')}</a></div></div>
+      <div class="detail-row"><div class="detail-label">Service</div><div class="detail-value">${esc(c.service||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value"><span class="badge badge-${c.status}">${c.status}</span></div></div>
+      <div class="detail-row"><div class="detail-label">Received</div><div class="detail-value td-sub">${esc(c.created_at)}</div></div>
+      <div class="detail-row"><div class="detail-label">Message</div><div class="detail-value"></div></div>
+      <div class="msg-box">${esc(c.message)}</div>
+      <div class="action-row">
+        <a href="mailto:${esc(c.email)}?subject=Re: Your enquiry at FOTO WORLD" class="btn btn-primary btn-sm">📧 Reply via Email</a>
+        ${c.phone ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>` : ''}
+        <select class="filter-select" style="font-size:11px;padding:4px 10px" onchange="updateContactStatus(${c.id},this.value)">
+          <option value="">Change status…</option>
+          <option value="new"${c.status==='new'?' selected':''}>New</option>
+          <option value="read"${c.status==='read'?' selected':''}>Read</option>
+          <option value="replied"${c.status==='replied'?' selected':''}>Replied</option>
+          <option value="archived"${c.status==='archived'?' selected':''}>Archived</option>
+        </select>
+      </div>`;
+    openModal('modal-contact');
+    if (c.status === 'new') updateContactStatus(c.id, 'read');
+  } catch (e) { toast(e.message, 'error'); }
 }
 
 async function updateContactStatus(id, status) {
   if (!status) return;
   try {
-    await api('/api/contact/' + id, { method:'PATCH', body: JSON.stringify({ status }) });
+    await api('/api/contact/' + id, { method: 'PATCH', body: JSON.stringify({ status }) });
+    toast('Status → ' + status, 'info');
     loadContacts();
-  } catch(e) {}
+    initDashboard();
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-// ── GALLERIES ─────────────────────────────────────
+/* ══ GALLERIES ═══════════════════════════════════════════ */
 async function loadGalleries() {
   try {
     const d = await api('/api/galleries');
-    document.getElementById('galleries-table-body').innerHTML = d.galleries.length === 0
-      ? `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:32px">No galleries yet. Create one to get started.</td></tr>`
-      : d.galleries.map(g => `
-        <tr>
-          <td style="font-family:monospace;color:var(--gold);font-weight:700">${g.code}</td>
-          <td class="td-name">${esc(g.client_name)}</td>
-          <td>${esc(g.session_name)}</td>
-          <td>${g.session_date}</td>
-          <td style="color:var(--gold)">${g.photo_count}</td>
-          <td style="font-size:12px;color:${g.expires_at && new Date(g.expires_at)<new Date() ? 'var(--red)' : 'var(--text3)'}">${g.expires_at || 'Never'}</td>
-          <td style="display:flex;gap:6px">
-            <button class="btn btn-danger btn-sm" onclick="deleteGallery(${g.id})">Delete</button>
-          </td>
-        </tr>`).join('');
-  } catch(e) { toast(e.message,'error'); }
+    if (!d) return;
+    document.getElementById('gl-tbody').innerHTML = d.galleries.length
+      ? d.galleries.map(g => {
+          const expired = g.expires_at && new Date(g.expires_at) < new Date();
+          return `
+          <tr>
+            <td class="td-mono">${esc(g.code)}</td>
+            <td class="td-primary">${esc(g.client_name)}</td>
+            <td>${esc(g.session_name)}</td>
+            <td>${esc(g.session_date)}</td>
+            <td style="color:var(--gold)">${g.photo_count}</td>
+            <td class="td-sub" style="color:${expired?'var(--red)':'var(--text3)'}">${g.expires_at||'Never'}</td>
+            <td><span class="badge ${expired?'badge-expired':'badge-active'}">${expired?'Expired':'Active'}</span></td>
+            <td style="display:flex;gap:6px">
+              <button class="btn btn-danger btn-sm" onclick="deleteGallery(${g.id},'${esc(g.code)}')">Delete</button>
+            </td>
+          </tr>`;
+        }).join('')
+      : `<tr><td colspan="8"><div class="empty"><div class="empty-icon">🖼️</div><p>No galleries yet. Create one to get started.</p></div></td></tr>`;
+  } catch (e) { toast(e.message, 'error'); }
 }
-
-function openCreateGallery() { document.getElementById('modal-create-gallery').classList.add('open'); }
 
 async function createGallery() {
   const body = {
-    code:         document.getElementById('gc-code').value.toUpperCase(),
-    password:     document.getElementById('gc-password').value,
-    client_name:  document.getElementById('gc-client').value,
-    session_name: document.getElementById('gc-session').value,
+    code:         document.getElementById('gc-code').value.trim().toUpperCase(),
+    password:     document.getElementById('gc-pass').value.trim(),
+    client_name:  document.getElementById('gc-client').value.trim(),
+    session_name: document.getElementById('gc-session').value.trim(),
     session_date: document.getElementById('gc-date').value,
     expires_at:   document.getElementById('gc-expires').value || undefined,
   };
+  if (!body.code || !body.password || !body.client_name || !body.session_name || !body.session_date) {
+    toast('Please fill all required fields', 'error'); return;
+  }
   try {
-    await api('/api/galleries', { method:'POST', body: JSON.stringify(body) });
-    closeModal('modal-create-gallery');
-    toast('Gallery created! Code: ' + body.code, 'success');
+    await api('/api/galleries', { method: 'POST', body: JSON.stringify(body) });
+    toast(`Gallery ${body.code} created! Password: ${body.password}`, 'success');
+    closeModal('modal-new-gallery');
+    ['gc-code','gc-pass','gc-client','gc-session','gc-date','gc-expires'].forEach(id => document.getElementById(id).value = '');
     loadGalleries();
-  } catch(e) { toast(e.message,'error'); }
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-async function deleteGallery(id) {
-  if (!confirm('Delete this gallery and all its photos? This cannot be undone.')) return;
+async function deleteGallery(id, code) {
+  if (!confirm(`Delete gallery "${code}" and ALL its photos?\n\nThis cannot be undone.`)) return;
   try {
-    await api('/api/galleries/' + id, { method:'DELETE' });
-    toast('Gallery deleted','success'); loadGalleries();
-  } catch(e) { toast(e.message,'error'); }
+    await api('/api/galleries/' + id, { method: 'DELETE' });
+    toast('Gallery deleted', 'success');
+    loadGalleries();
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-// ── REVIEWS ──────────────────────────────────────
+/* ══ REVIEWS ═════════════════════════════════════════════ */
 async function loadReviews() {
+  const filter = document.getElementById('rv-filter').value;
   try {
     const d = await api('/api/reviews/all');
-    document.getElementById('reviews-table-body').innerHTML = d.reviews.length === 0
-      ? `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:32px">No reviews yet</td></tr>`
-      : d.reviews.map(r => `
+    if (!d) return;
+    let reviews = d.reviews;
+    if (filter === 'pending')  reviews = reviews.filter(r => !r.approved);
+    if (filter === 'approved') reviews = reviews.filter(r =>  r.approved);
+
+    document.getElementById('rv-tbody').innerHTML = reviews.length
+      ? reviews.map(r => `
         <tr>
-          <td class="td-name">${esc(r.name)}</td>
+          <td class="td-primary">${esc(r.name)}</td>
           <td>${esc(r.service)}</td>
           <td><span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span></td>
-          <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--text3)">${esc(r.review_text)}</td>
-          <td><button class="btn btn-sm ${r.verified?'btn-green':'btn-ghost'}" onclick="toggleReview(${r.id},'verified',${r.verified?0:1})">${r.verified?'✓ Verified':'Mark Verified'}</button></td>
-          <td><button class="btn btn-sm ${r.approved?'btn-green':'btn-ghost'}" onclick="toggleReview(${r.id},'approved',${r.approved?0:1})">${r.approved?'✓ Live':'Approve'}</button></td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteReview(${r.id})">Delete</button></td>
-        </tr>`).join('');
-  } catch(e) { toast(e.message,'error'); }
+          <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--text3)">${esc(r.review_text)}</td>
+          <td>
+            <button class="btn btn-sm ${r.verified?'btn-green':'btn-ghost'}" onclick="toggleReview(${r.id},'verified',${r.verified?0:1})">
+              ${r.verified ? '✓ Verified' : 'Verify'}
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-sm ${r.approved?'btn-green':'btn-ghost'}" onclick="toggleReview(${r.id},'approved',${r.approved?0:1})">
+              ${r.approved ? '✓ Live' : 'Approve'}
+            </button>
+          </td>
+          <td class="td-sub">${esc(r.created_at?.slice(0,10)??'')}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteReview(${r.id})">Delete</button>
+          </td>
+        </tr>`).join('')
+      : `<tr><td colspan="8"><div class="empty"><div class="empty-icon">⭐</div><p>No reviews found</p></div></td></tr>`;
+  } catch (e) { toast(e.message, 'error'); }
 }
 
 async function toggleReview(id, field, val) {
   try {
-    await api('/api/reviews/' + id, { method:'PATCH', body: JSON.stringify({ [field]: val }) });
-    toast(`Review ${field} updated`, 'success'); loadReviews();
-  } catch(e) { toast(e.message,'error'); }
+    await api('/api/reviews/' + id, { method: 'PATCH', body: JSON.stringify({ [field]: val }) });
+    toast(`Review ${field} updated`, 'success');
+    loadReviews();
+  } catch (e) { toast(e.message, 'error'); }
 }
 
 async function deleteReview(id) {
-  if (!confirm('Delete this review?')) return;
+  if (!confirm('Delete this review? This cannot be undone.')) return;
   try {
-    await api('/api/reviews/' + id, { method:'DELETE' });
-    toast('Review deleted','success'); loadReviews();
-  } catch(e) { toast(e.message,'error'); }
+    await api('/api/reviews/' + id, { method: 'DELETE' });
+    toast('Review deleted', 'success');
+    loadReviews();
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-// ── NEWSLETTER ────────────────────────────────────
+/* ══ NEWSLETTER ══════════════════════════════════════════ */
 async function loadNewsletter() {
   try {
-    const d = await api('/api/newsletter?limit=200');
-    document.getElementById('subscriber-count').textContent = `${d.total} active subscribers`;
-    document.getElementById('newsletter-table-body').innerHTML = d.subscribers.length === 0
-      ? `<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:32px">No subscribers yet</td></tr>`
-      : d.subscribers.map((s,i) => `
+    const d = await api('/api/newsletter?limit=500');
+    if (!d) return;
+    document.getElementById('nl-count').textContent = `${d.total} active subscribers`;
+    document.getElementById('nl-tbody').innerHTML = d.subscribers.length
+      ? d.subscribers.map((s, i) => `
         <tr>
-          <td style="color:var(--text3)">${i+1}</td>
-          <td class="td-name">${esc(s.email)}</td>
-          <td style="font-size:12px;color:var(--text3)">${s.created_at.slice(0,10)}</td>
-          <td><button class="btn btn-danger btn-sm" onclick="unsubscribe(${s.id})">Unsubscribe</button></td>
-        </tr>`).join('');
-  } catch(e) { toast(e.message,'error'); }
+          <td class="td-sub">${i + 1}</td>
+          <td class="td-primary">${esc(s.email)}</td>
+          <td class="td-sub">${esc(s.created_at?.slice(0,10)??'')}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="unsubscribe(${s.id},'${esc(s.email)}')">Remove</button>
+          </td>
+        </tr>`).join('')
+      : `<tr><td colspan="4"><div class="empty"><div class="empty-icon">📧</div><p>No subscribers yet</p></div></td></tr>`;
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-async function unsubscribe(id) {
-  if (!confirm('Remove this subscriber?')) return;
+async function unsubscribe(id, email) {
+  if (!confirm(`Remove ${email} from newsletter?`)) return;
   try {
-    await api('/api/newsletter/' + id, { method:'DELETE' });
-    toast('Unsubscribed','success'); loadNewsletter();
-  } catch(e) { toast(e.message,'error'); }
+    await api('/api/newsletter/' + id, { method: 'DELETE' });
+    toast('Subscriber removed', 'success');
+    loadNewsletter();
+  } catch (e) { toast(e.message, 'error'); }
 }
 
-// ── UTILITIES ────────────────────────────────────
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+/* ── Enter key on login ─────────────────────────────────── */
+document.getElementById('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('login-username').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-password').focus(); });
 
-function toast(msg, type='success') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'show ' + type;
-  clearTimeout(el._t);
-  el._t = setTimeout(() => el.className = '', 3500);
-}
-
-document.querySelectorAll('.modal-bg').forEach(el => el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); }));
+/* ── Bootstrap ──────────────────────────────────────────── */
+// Show loader briefly, then try to restore session from cookie
+setTimeout(() => tryRestoreSession(), 400);
 </script>
 </body>
 </html>
